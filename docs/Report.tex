@@ -1,0 +1,41 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage{float}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{ifpdf}
+\usepackage{url}
+\usepackage{xtab}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage[english]{babel} 
+\usepackage[parfill]{parskip}
+\newcommand{\comment}[1]{} \comment{This is a block comment wrapped in curly
+brackets}
+%\renewcommand{\thefootnote}{\roman{footnote}}
+\title{Group Report | TDT4240}
+\author{Aleksander Gisvold, Henning M. Wold, Marte Dybevik Løge, Nina Margrethe Smørsgård, Tri Minh Nguyen}
+\date{\today}
+\begin{document}
+\input{section/front-page}
+\newpage
+\tableofcontents
+\newpage
+% Insert path to main sections here, using syntax \input{folder/filename}
+\input{section/example}
+\newpage
+\addcontentsline{toc}{section}{Appendices}
+\appendix
+% Insert path to appendix sections here, using syntax \input{folder/filename}
+\newpage
+\listoftables
+\listoffigures
+\bibliographystyle{plain}
+\bibliography{bibl}
+\end{document}
