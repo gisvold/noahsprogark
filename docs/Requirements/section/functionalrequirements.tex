@@ -1,6 +1,46 @@
 \section{Functional Requirements} 
 \label{sec:functional requirements}
 
-{\bf FR1: }
+{\bf FR1: Choose board size}
+The players should be able to choose what size the board should be, before starting the game.
+Priority: High
 
-{\bf FR2: }
+{\bf FR2: Set player names}
+Before the game is started, the players must be allowed to enter a custom name.
+Priority: Medium
+
+{\bf FR3: Connect to server}
+Before the game starts, the device should connect to the server in order to be a multiplayer game
+Priority: High
+
+{\bf FR4: Receive board from server}
+The server should send all connected players a number of random words.
+Priority: High
+
+{\bf FR5: Place words randomly on board}
+The game should place the words randomly on the board game, in the aligned grid. 
+Priority: High
+
+{\bf FR6: Cross off words}
+The player should be able to cross off words by touching the cell containing the word on the board.
+Priority: High
+
+{\bf FR7: Check for Bingo!}
+The game logic should check if the player has crossed off all the words on a vertical, horizontal or diagonal line.
+Priority: High
+
+{\bf FR8: Check if player is the first to have Bingo!}
+The game should communicate with the server to check if the player is the first player to get Bingo, Double-Bingo, Triple-Bingo or MEGA-Bingo! (See appendix for Bingo Rules)
+Priority: High
+
+{\bf FR9: Notify other players that player XXX has Bingo}
+If the player is the first player to get Bingo, Double-Bingo, Triple-Bingo or MEGA-Bingo! the server should notify all other players that player XXX was the first to reach this.
+Priority: Medium
+
+{\bf FR10: Conformity with Android UI standards}
+The game's user interface should conform to Android user interface guidelines. This means that the look and feel should be familiar for new users.
+Priority: L
+
+{\bf FR11: Continuing existing game}
+The players should be able to continue an existing game at a later time if the connection was lost or the application was exited during a game
+Priority: High
