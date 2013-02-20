@@ -1,11 +1,21 @@
 \section{Architectural tactics}
 \label{sec:architecturaltactics}
 
+\subsection{Modifiability} 
+We plan to make modifications to our game, either during the project lifecycle or after the project is finished. Therefore it is important to focus on modifiability from the beginning and maintain this focus throughout the development lifecycle. 
+%TODO: What patterns will we use and how will this affect the modifiability
 
-\subsection{Modifiability} %Must have. Exercise says so
+\subsection{Testability}
+Separating the user interface from the logic will make it easier to test components during development. We will also separate the server from the clients in order to test scalability and server performance under expected and heavy load.
 
-\subsection{Testability} %Optional, but recommended
+\subsection{Availability} 
+Our game run locally on each device, but relies on internet connection to a server in order to get the multiplayer experience. The server will give each player their board, and notify players when some other person scores a "Bingo!". 
+%TODO: How will we achieve this??
 
-\subsection{Availability} %Only available for network games
+\subsection{Performance}
+As in all applications, performance is important. 
+%TODO: Write something useful here
 
-\subsection{Usability} %Optional, but highly recommended
+\subsection{Usability} 
+%TODO: Write more in this section.
+We will make our best efforts in order to follow the guidelines for Android user interfaces, in order to make the game intuitive for users.
