@@ -3,18 +3,22 @@
 
 \subsection{Modifiability} 
 We plan to make modifications to our game, either during the project lifecycle or after the project is finished. Therefore it is important to focus on modifiability from the beginning and maintain this focus throughout the development lifecycle. 
-%TODO: What patterns will we use and how will this affect the modifiability
+We have chosen the MVC pattern, since it separates logic and interface in a useful manner. This separation will give higher modifiability.
 
 \subsection{Testability}
 Separating the user interface from the logic will make it easier to test components during development. We will also separate the server from the clients in order to test scalability and server performance under expected and heavy load.
+
 
 \subsection{Availability} 
 Our game run locally on each device, but relies on internet connection to a server in order to get the multiplayer experience. The server will give each player their board, and notify players when some other person scores a "Bingo!". 
 %TODO: How will we achieve this??
 
+
 \subsection{Performance}
-As in all applications, performance is important. 
-%TODO: Write something useful here
+As in all applications, performance is important. This won't be a prioritized utility, since we don't expect it to be a problem. Java uses garbage collection, and our game will not be running any constant animation or rendering.
+
+%TODO: Write something about performance on server
+
 
 \subsection{Usability} 
 %TODO: Write more in this section.
