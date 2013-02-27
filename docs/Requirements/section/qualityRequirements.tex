@@ -9,8 +9,76 @@
 By default, the board size will be set to 4x4 tiles. 
 A modification will be to make it possible for the game admin to choose the board size, i.eg. 3x3, 5x5. 
 
+\begin{tabular}{|c|c|}
+\hline
+{\bf Portion of scenario} & {\bf Values} \\ \hline
+Source & Developer \\ \hline
+Stimulus & Change game board size \\ \hline
+Artifact & Change the board sent by the server. Change the logic
+checking for bingo \\ \hline
+Environment & Design time \\ \hline
+Response & Extend functionality of the game \\ \hline
+Response measure & 8 hours to implement \\ \hline
+\end{tabular}
+\newline
+
+{\bf M2: Golden words}
+Adding "Golden words" to the gameplay. A random word of the already random words, will be chosen as a "Golden word". This will be placed on the board like a normal word, but will be written in a golden font color. 
+
+\begin{tabular}{|c|c|}
+\hline
+{\bf Portion of scenario} & {\bf Values} \\ \hline
+Source & Developer \\ \hline
+Stimulus & Implement golden words \\ \hline
+Artifact & Change the words sent by the server. Change the logic
+checking for bingo \\ \hline
+Environment & Design time \\ \hline
+Response & Extend functionality of the game \\ \hline
+Response measure & 10 hours to implement \\ \hline
+\end{tabular}
+
+{\bf M3: Admin player}
+A master player will have an admin interface to cross off words in the master interface. If a player tries to cross off the word before it is crossed off in the master interface, the player will not be allowed to cross off the word. This is done to secure against cheating.
+
+\begin{tabular}{|c|c|}
+\hline
+{\bf Portion of scenario} & {\bf Values} \\ \hline
+Source & Developer \\ \hline
+Stimulus & Add admin player to avoid cheating \\ \hline
+Artifact & Master interface. Implement logic when crossing off words \\ \hline
+Environment & Design time \\ \hline
+Response & Extend functionality of the game to avoid cheating \\ \hline
+Response measure & 25 hours to implement \\ \hline
+\end{tabular}
 
 
 
 \subsection{Availability}
+
+{\bf A1: Session ID}
+Make a session ID for each connection. Each user will have a session ID, in case of disconnection. The server will store the board for each player, linked to the session ID. If a user is disconnected, the game can be retrieved using the session ID.
+
+\begin{tabular}{|c|c|}
+\hline
+{\bf Portion of scenario} & {\bf Values} \\ \hline
+Source &  \\ \hline
+Stimulus &  \\ \hline
+Artifact &  \\ \hline
+Environment &  \\ \hline
+Response &  \\ \hline
+Response measure & 20 hours to implement \\ \hline
+\end{tabular}
+
+
+{\bf A3: TCP Connection}
+\begin{tabular}{|c|c|}
+\hline
+{\bf Portion of scenario} & {\bf Values} \\ \hline
+Source &  \\ \hline
+Stimulus &  \\ \hline
+Artifact &  \\ \hline
+Environment &  \\ \hline
+Response &  \\ \hline
+Response measure & 14 hours to implement \\ \hline
+\end{tabular}
 
