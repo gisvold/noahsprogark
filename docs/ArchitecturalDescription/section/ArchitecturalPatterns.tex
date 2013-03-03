@@ -1,7 +1,6 @@
 \section{Architectural patterns} 
 \label{architecturalpatterns}
 
-%TODO: What other patterns will we use?
 We will be implementing our game using the Model-View-Controller pattern. 
 
 The game settings will be shared by all game states by implementing the Singleton pattern. 
@@ -9,3 +8,5 @@ The game settings will be shared by all game states by implementing the Singleto
 In order to achieve the multiplayer experience, we will use the client server pattern. We will run a server which all the players will connect to. The server will host the game, and relay all necessary data between the different players. 
 
 We plan to use the Sheep framework, however, we have not decided to what extend we want to use it. We will definitely be utilizing the layer functionality Sheep provides.
+
+The server will be implmeented using the MVC pattern. What serverside technology we will be using is not completely determined, but Django will most likely be our chosen web fremwork. Django appears to be a MVC-framework where we mainly will manage the models and the views for data handling and representation.
