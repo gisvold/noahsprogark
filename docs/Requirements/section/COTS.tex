@@ -1,21 +1,33 @@
 \section{COTS - Components and Technical Constraints}
 \label{sec:COTS}
 %Finished
-
-Android is a Linux-based operating system for mobile devices such as smartphones and tablets. The application layer framework include Java-compatible libraries, which allows developers to program Android applications in Java, using the Android SDK. Therefore, we are bound to the constraints that Java apply in general, as well as the Android Framework and the hardware limitations of the physical devices.
+Android is a Linux-based operating system for mobile devices such as
+smartphones and tablets. The application layer framework include
+Java-compatible libraries, which allows developers to program Android
+applications in Java, using the Android SDK. Therefore, we are bound to the
+constraints that Java apply in general, as well as the Android Framework and
+the hardware limitations of the physical devices.
 
 \subsection{Touch Screen}
-Although some Android devices have physical keyboards, most of them uses a touch screen as main input device. Therefore it is important that any interaction with the game must be designed and arranged in a manner that supports the screen constraints. 
+Although some Android devices have physical keyboards, most of them uses a
+touch screen as their main input device. It is therefore important that any
+interaction with the game must be designed and arranged in a manner that
+supports the screen constraints. 
 
 \subsection{Screen Resolution}
-The screen resolution on Android devices vary greatly. To deal with this, we will add images of different resolution. The Android compiler will automatically compile images with the correct resolution, as long as they are provided and correctly placed within the source code.
+The screen resolution on Android devices vary greatly. To deal with this, we
+will add images of different resolution. The Android compiler will
+automatically compile images with the correct resolution, as long as they are
+provided and correctly placed within the source code.
 
 \subsection{Android device only}
 The game will only run on Android mobile devices and Android emulators.
 
 \subsection{Memory Constraints}
-Mobile devices generally have a limited amount of memory. This will most likely not be an issue, but still something we need to be aware of.
+Mobile devices generally have a limited amount of memory. This will most likely
+not be an issue, but still something we need to be aware of.
 
 \subsection{Server performance}
-Our server will be a lightweight server with limited resources. The amount of concurrent connections the server may handle will be something we must take notice of.
-
+Our server will be a lightweight server with limited resources. The amount of
+concurrent connections the server may handle will be something we must take
+notice of.

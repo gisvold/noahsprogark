@@ -1,15 +1,16 @@
 \section{Quality Requirements}
 
-1. Modifiability
-2. Availability
+{\bf Primary quality attribute: } Modifiability\\
+{\bf Secondary quality attribute: } Availability
 
 \subsection{Modifiability}
 
-{\bf M1: Choose board size}
+\subsubsection*{M1: Choose board size}
 By default, the board size will be set to 4x4 tiles. 
-A modification will be to make it possible for the game admin to choose the board size, i.eg. 3x3, 5x5. 
+A modification will be to make it possible for the game admin to choose the
+board size, i.eg. 3x3, 5x5.
 
-\begin{tabular}{|c|c|}
+\begin{tabular}{|m{0.3 \textwidth}|m{0.7 \textwidth}|}
 \hline
 {\bf Portion of scenario} & {\bf Values} \\ \hline
 Source & Developer \\ \hline
@@ -22,10 +23,14 @@ Response measure & 8 hours to implement \\ \hline
 \end{tabular}
 \newline
 
-{\bf M2: Golden words}
-Adding "Golden words" to the gameplay. A random word of the already random words, will be chosen as a "Golden word". This will be placed on the board like a normal word, but will be written in a golden font color. 
+\subsubsection*{M2: Golden words}
+Adding ``Golden words'' to the gameplay. A random word among the already random
+words, will be chosen as a ``Golden word''. This will be placed on the board
+like a normal word, but will be written in a golden font color. Getting a bingo
+with this word included in the bingo can, for instance, be used to give out
+bonus prizes.
 
-\begin{tabular}{|c|c|}
+\begin{tabular}{|m{0.3 \textwidth}|m{0.7 \textwidth}|}
 \hline
 {\bf Portion of scenario} & {\bf Values} \\ \hline
 Source & Developer \\ \hline
@@ -37,10 +42,13 @@ Response & Extend functionality of the game \\ \hline
 Response measure & 10 hours to implement \\ \hline
 \end{tabular}
 
-{\bf M3: Admin player}
-A master player will have an admin interface to cross off words in the master interface. If a player tries to cross off the word before it is crossed off in the master interface, the player will not be allowed to cross off the word. This is done to secure against cheating.
+\subsubsection*{M3: Admin player}
+A master player will have an admin interface to cross off words in the master
+word list. If a player tries to cross off the word before it is crossed off in
+the master word list, the player will not be allowed to cross off the word by
+the server. This is done to secure against cheating.
 
-\begin{tabular}{|c|c|}
+\begin{tabular}{|m{0.3 \textwidth}|m{0.7 \textwidth}|}
 \hline
 {\bf Portion of scenario} & {\bf Values} \\ \hline
 Source & Developer \\ \hline
@@ -51,14 +59,15 @@ Response & Extend functionality of the game to avoid cheating \\ \hline
 Response measure & 25 hours to implement \\ \hline
 \end{tabular}
 
-
-
 \subsection{Availability}
 
-{\bf A1: Session ID}
-Make a session ID for each connection. Each user will have a session ID, in case of disconnection. The server will store the board for each player, linked to the session ID. If a user is disconnected, the game can be retrieved using the session ID.
+\subsubsection*{A1: Session ID}
+Make a session ID for each connection. Each user will have a session ID, in
+case of disconnection. The server will store the board for each player, linked
+to the session ID. If a user is disconnected, the game can be retrieved using
+the session ID, which should be stored locally on the client device.
 
-\begin{tabular}{|c|c|}
+\begin{tabular}{|m{0.3 \textwidth}|m{0.7 \textwidth}|}
 \hline
 {\bf Portion of scenario} & {\bf Values} \\ \hline
 Source &  Developer \\ \hline
@@ -70,15 +79,20 @@ Response measure & 20 hours to implement \\ \hline
 \end{tabular}
 
 
-{\bf A3: TCP Connection}
-\begin{tabular}{|c|c|}
+\subsubsection*{A2: TCP Connection}
+Utilize the TCP transport protocol for all communications between the client
+and server. This is to ensure that the connections stay up for the duration
+of the game.
+
+\begin{tabular}{|m{0.3 \textwidth}|m{0.7 \textwidth}|}
 \hline
 {\bf Portion of scenario} & {\bf Values} \\ \hline
 Source & Developer \\ \hline
 Stimulus & Secure against package loss \\ \hline
 Artifact & Connection between client and server \\ \hline
 Environment & Design time \\ \hline
-Response & Secure against package loss in communication between client and server \\ \hline
+Response & Secure against package loss in communication between client and
+server \\ \hline
 Response measure & 14 hours to implement \\ \hline
 \end{tabular}
 
