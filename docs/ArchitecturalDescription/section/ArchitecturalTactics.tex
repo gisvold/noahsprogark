@@ -10,12 +10,14 @@ Separating the user interface from the logic will make it easier to test compone
 
 
 \subsection{Availability} 
-Our game run locally on each device, but relies on internet connection to a server in order to get the multiplayer experience. The server will give each player their board, and notify players when some other person scores a "Bingo!". 
-%TODO: How will we achieve this??
+The game logic runs locally on each device, but relies on Internet connection to join games with other players. The multiplayer experience is achieved by setting up the server as a RESTful web service, providing the client with its required data. The client will be able to ask the server for available games, and return a query for the desired game. Each player will get its own shuffeled board when entering a game. The server will also keep all the players updated of the game state, and will send a notification if someone has won.
 
 
 \subsection{Performance}
-As in all applications, performance is important. This won't be a prioritized utility, since we don't expect it to be a problem. Java uses garbage collection, and our game will not be running any constant animation or rendering.
+Our system will consist of a remote server and local clients. When measuring performance we will have to determine the system's reliability when involving heavy loading and time-cirtical response requirement, since the communication between players will be handled off the clients. 
+
+Data transfer has to be set to a minimum to reduce the impact of delay between clients and server. The clients itself wouldn't have much load while its operative. Our challenge will therefore be on the server side. Mostly by handling large amount of users and network loads. 
+
 
 %TODO: Write something about performance on server
 
