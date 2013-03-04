@@ -2,42 +2,42 @@
 \label{sec:architecturaltactics}
 
 \subsection{Modifiability} 
-We plan to make modifications to our game, either during the project lifecycle
-or after the project is finished. Therefore it is important to focus on
-modifiability from the beginning and maintain this focus throughout the
-development lifecycle. We have chosen the MVC pattern, since it separates logic
-and interface in a useful manner. This separation will give higher
-modifiability.
+We plan to make modifications to our game either during the project lifecycle,
+or after the project is finished. It is therefore important to focus on
+modifiability from the beginning, and maintain this focus throughout the
+development lifecycle. We have chosen the Model-View-Controller pattern, since
+it separates logic and the user interface in a useful manner. This separation
+will give higher modifiability.
 
 \subsection{Testability}
 Separating the user interface from the logic will make it easier to test
 components during development. We will also separate the server from the
-clients in order to test scalability and server performance under expected and
+client in order to test scalability and server performance under expected and
 heavy load.
 
 \subsection{Availability} 
-The game logic runs locally on each device, but relies on Internet connection
-to join games with other players. The multiplayer experience is achieved by
-setting up the server as a RESTful web service, providing the client with its
-required data. The client will be able to ask the server for available games,
-and return a query for the desired game. Each player will get its own shuffled
-board when entering a game. The server will also keep all the players updated
-of the game state, and will send a notification if someone has won.
+The game logic runs locally on each device, but relies on an internet
+connection to join games with other players. The multiplayer experience is
+achieved by setting up the server as a RESTful web service, providing the
+client with its required data. Each player will get their own shuffled board
+when entering a game. The server will also keep all the players updated about
+the game state by sending a notification whenever someone wins the game.
 
 \subsection{Performance}
-Since our system system will consist of a remote server and local clients, and
-the communication between players will be handled off the clients, measuring
-performance we will have to determine the system's reliability when involving
-heavy loading and time-cirtical response requirement.
+Our system will consist of a remote server together with local clients and the
+communication between players will be handled by the server. Because of this,
+when measuring performance, we will have to determine the system's reliability
+when heavy loading and time-critical response requirements are involved.
 
 Data transfer has to be set to a minimum to reduce the impact of delay between
-clients and server. The clients itself wouldn't have much load while its
-operative, altough we do have to keep in mind that the client needs an active
-connection to the server when playing. Most of our challenge will therefore be
-on the server side. Mostly by handling large amount of users and network loads.
+the clients and the server. The client itself won't have much load while it's
+operative, although we do have to keep in mind that the client needs an
+active connection to the server while playing. Most of the challenge will
+therefore be server side, mostly by handling large amount of users and network
+loads.
 
 \subsection{Usability} 
 We will make our best efforts in order to follow the guidelines for Android
-user interfaces, in order to make the game intuitive for users. Since our
+user interfaces design, in order to make the game intuitive for users. Since our
 target audience are experienced smartphone users, it will be necessary to have
 a nice and understandable user interface.
