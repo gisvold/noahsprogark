@@ -1,30 +1,49 @@
-\section{Architectural viewpoint selection} 
+\section{Architectural viewpoint selection}
 \label{architecturalviewpointselection}
 %Finished
+For this project we have chosen to use two primary architectural viewpoints and
+one secondary. The main viewpoints will be development viewpoint and the logic
+viewpoint. The secondary one will be the process viewpoint.
 
-For this project we have chosen to use two primary architectural viewpoints and one secondary. 
-The main viewpoints will be development viewpoint and the logic viewpoint. The secondary one will be the process viewpoint.
-
-We have chosen to remove the physical viewpoint. Even though our game will run on different physical devices (there is 3 997 different fragmentations of devices running Android \cite{website:androidfragmentations}), all of the interaction with the hardware is abstracted by the JVM and the Android operating system.
+We initially elected to remove the physical viewpoint. Even though our game
+will run on different physical devices (there is at least $3,997$ distinct
+device models running Android\cite{website:androidfrag}), all of the
+interaction with the hardware is abstracted by the JVM and the Android
+operating system. Since we are going to use a server/client model for network
+communication, however, we ended up with a simple physical view showing how
+the client and server are connected.
 
 \subsection{Logic View}
 \begin{description}
-	\item[Purpose:]{The logic view is concerned with the functionality that the system provides to end-users.}
-	\item[Stakeholders:]{Players, developers, course staff and Abakus and Online.}
+	\item[Purpose:]{The logic view is concerned with the functionality that the
+    system provides to end-users.}
+	\item[Stakeholders:]{Players, Developers, Course Staff, Abakus and
+    Online.}
 	\item[Form of description:]{Class diagram using 4+1 model description.}
 \end{description}
 
-
 \subsection{Development View}
 \begin{description}
-	\item[Purpose:]{The development view illustrates a system from a programmers perspective and concerned with software management.}
+	\item[Purpose:]{The development view illustrates a system from a programmers
+    perspective, and is concerned with software management.}
 	\item[Stakeholders:]{Developers, Course Staff.}
 	\item[Form of description:]{Architecture layout diagram.}
 \end{description}
 
 \subsection{Process View}
 \begin{description}
-	\item[Purpose:]{The process view deals with the dynamic aspect of the system, explains the system processes and how they communicate and focuses on the runtime behaviour of the system.}
+	\item[Purpose:]{The process view deals with the dynamic aspect of the system,
+    explains the system processes and how they communicate and focuses on the
+    runtime behaviour of the system.}
 	\item[Stakeholders:]{Players, Developers, Course Staff, Abakus and Online.}
 	\item[Form of description:]{Process blueprint with standard notation.}
+\end{description}
+
+\subsubsection{Physical View}
+\begin{description}
+  \item[Purpose:]{amg}
+  \item[Stakeholders:]{Developers, Course Staff and System Administrators (for
+    instance Abakus and Online)}
+  \item[Form of description:]{Diagram showing how the server and client are
+    connected, and how functionality are divided between them}
 \end{description}
