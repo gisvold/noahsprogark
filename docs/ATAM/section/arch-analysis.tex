@@ -12,9 +12,9 @@
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add functionality} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Make modification} \\ \hline
   \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{Keep the modules small} & R3 &  &  &  \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{High cohesion} & R3 & T1 &  &  \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{Low coupling} &  & T2 &  &  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{Keep the modules small} & R3 &  & N1 &  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{High cohesion} & R3 & T1 &  & N1 \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{Low coupling} &  & T2 &  & N1 \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} It's a good thing to add new functionality, but then one must be careful not to make it too complex. A large complex change can cause a lot of errors and major changes to existing architecture. It is therefore important to have options for functionality in mind at a early stage to avoid major changes in the architecture.} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
 \end{tabular}
@@ -29,7 +29,7 @@
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add new units} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Cost in terms of time} \\ \hline
   \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{Support user commands} & S1 & T3 &  &  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{Support user commands} & S1 & T3 & R2 & N1 \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} } \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
 \end{tabular}
