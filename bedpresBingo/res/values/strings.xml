@@ -4,5 +4,8 @@
     <string name="app_name">bedpresBingo</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="admin_text">Administration</string>
+    <string name="settings">Settings</string>
+    <string name="new_game">New Game</string>
 
 </resources>
