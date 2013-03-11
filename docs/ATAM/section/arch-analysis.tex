@@ -1,66 +1,85 @@
 \section{Analysis of Architectural Approach}
 
-%TODO: Add architectural decisions, sensitivity points, tradeoff points, risks and non-risks
-%TODO: Write something under "reasoning" 
-%TODO: Make some space between the tables! (Marte er noob og vet ikke hvordan det gjøres)
-
-\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
+\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}
+|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
   \hline
-  {\bf Scenario \#:} M1 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:} Add functionality to system} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Modifiability} \\ \hline
+  {\bf Scenario \#:} M1 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:}
+  Add functionality to system} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Modifiability}
+  \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Environment:} Build time} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add functionality} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Make modification} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{Keep the modules small} & S3 &  & N1 &  \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{High cohesion} & S3 & T1 &  & N1 \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add
+  functionality} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Make modification}
+  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} &
+  {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{Keep the modules small} & S3 &  & N1 &
+  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{High cohesion} & S3 & T1 &  & N1
+  \\ \hline
   \multicolumn{2}{|m{0.3 \textwidth}|}{Low coupling} &  & T2 &  & N1 \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} It's a good thing to add new functionality, but then one must be careful not to make 
-    it too complex. A large complex change can cause a lot of errors and major changes to existing architecture. It is therefore important
-    to have options for functionality in mind at a early stage to avoid major changes in the architecture.} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} It's a good thing to
+  add new functionality, but then one must be careful not to make it too
+  complex. A large complex change can cause a lot of errors and major changes
+  to existing architecture. It is therefore important to have options for
+  functionality in mind at a early stage to avoid major changes in the
+  architecture.} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
 \end{tabular}
 
-
-
-\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
+\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}
+|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
   \hline
-  {\bf Scenario \#:} M2 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:} Add new unit} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Modifiability} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Environment:} Build-, design time} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add new units} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Cost in terms of time} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{Support user commands} & S1 & T3 & R2 & N1 \\ \hline
+  {\bf Scenario \#:} M2 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:}
+  Add new unit} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Modifiability}
+  \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Environment:} Build-, design time}
+  \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Developer wishes to add
+  new units} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Cost in terms of time}
+  \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} &
+  {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{Support user commands} & S1 & T3 & R2 &
+  N1 \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} } \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
 \end{tabular}
 
-
-
-\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
+\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}
+|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
   \hline
-  {\bf Scenario \#:} U1 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:} Player attacks opponent} \\ \hline
+  {\bf Scenario \#:} U1 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:}
+  Player attacks opponent} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Usability} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Environment:} Runtime} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Player wishes to attack the other players unit} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Player attacks the other players unit} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Player wishes to attack
+  the other players unit} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Player attacks the other
+  players unit} \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} &
+  {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
   \multicolumn{2}{|m{0.3 \textwidth}|}{} &  &  &  &  \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} } \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
 \end{tabular}
 
-
-
-\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
+\begin{tabular}{|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}
+|m{0.15 \textwidth}|m{0.15 \textwidth}|m{0.15 \textwidth}|}
   \hline
-  {\bf Scenario \#:} U2 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:} Player wishes to move unit} \\ \hline
+  {\bf Scenario \#:} U2 & \multicolumn{5}{m{0.75 \textwidth}|}{{\bf Scenario:}
+  Player wishes to move unit} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Attribute(s):} Usability} \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Environment:} Runtime} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Player wishes to move a unit on the board} \\ \hline
-  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Player moves the unit to the new location} \\ \hline
-  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} & {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Stimulus:} Player wishes to move a
+  unit on the board} \\ \hline
+  \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Response:} Player moves the unit to
+  the new location} \\ \hline
+  \multicolumn{2}{|m{0.3 \textwidth}|}{\bf Architectural Decisions} &
+  {\bf Sensitivity} & {\bf Tradeoff} & {\bf Risk} & {\bf Nonrisk} \\ \hline
   \multicolumn{2}{|m{0.3 \textwidth}|}{} &  &  &  &  \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Reasoning:} } \\ \hline
   \multicolumn{6}{|m{0.9 \textwidth}|}{{\bf Architectural Diagram:} } \\ \hline
