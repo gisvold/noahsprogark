@@ -14,6 +14,8 @@ class GameRelResource(ModelResource):
     term = fields.ToOneField(TermResource, 'term', full=True)
     class Meta:
         queryset = GameRel.objects.all()
+        include_resource_uri = False
+
 
 class GameResource(ModelResource):
     terms = fields.ToManyField(GameRelResource, 'gamerel_set', related_name='term', full=True)
