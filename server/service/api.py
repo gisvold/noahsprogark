@@ -15,6 +15,7 @@ class GameRelResource(ModelResource):
     class Meta:
         queryset = GameRel.objects.all()
         include_resource_uri = False
+        excludes = ['order',]
 
 
 class GameResource(ModelResource):
