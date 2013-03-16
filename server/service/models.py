@@ -2,7 +2,6 @@ from tastypie.utils.timezone import now
 from django.db import models
 from django.template.defaultfilters import slugify
 
-# Create your modules here
 
 class Term(models.Model):
     term = models.CharField(max_length=200)
@@ -16,6 +15,7 @@ class Term(models.Model):
             self.slug = slugify(self.term)
 
         return super(Term, self).save(*args, **kwargs)
+
 
 class Company(models.Model):
     name = models.CharField(max_length=200)
@@ -42,6 +42,7 @@ class Game(models.Model):
             self.slug = slugify(self.title)
 
         return super(Game, self).save(*args, **kwargs)
+
 
 class GameRel(models.Model):
     term = models.ForeignKey(Term)
