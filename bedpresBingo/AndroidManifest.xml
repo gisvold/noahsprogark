@@ -28,11 +28,11 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="no.ntnu.noahsprogark.bedpresbingo.Settings_Activity"
+            android:name="no.ntnu.noahsprogark.bedpresbingo.SettingsActivity"
             android:label="@string/title_activity_settings_" >
         </activity>
         <activity
-            android:name="no.ntnu.noahsprogark.bedpresbingo.Admin_Activity"
+            android:name="no.ntnu.noahsprogark.bedpresbingo.AdminActivity"
             android:label="@string/title_activity_admin_" >
         </activity>
     </application>
