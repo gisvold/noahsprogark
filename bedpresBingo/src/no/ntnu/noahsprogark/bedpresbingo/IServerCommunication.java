@@ -7,4 +7,5 @@ public interface IServerCommunication {
 	 * @return A String array containing the words.
 	 */
 	public String[] getWordsFromServer();
+	
 }
