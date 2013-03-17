@@ -46,6 +46,7 @@ class Game(models.Model):
     slug = models.SlugField()
     terms = models.ManyToManyField(Term, through='GameRel')
     create_date = models.DateTimeField(default=now)
+    # boards = models.ManyToManyField('service.Board', through='GameWithBoardRel')
 
     def __unicode__(self):
         return self.title
@@ -59,11 +60,21 @@ class Game(models.Model):
 class Board(models.Model):
     player = models.ForeignKey(Player)
     game = models.ForeignKey(Game)
+    terms = models.ManyToManyField(Term, through='BoardTermRel')
+    active = models.IntegerField(max_length=1)
 
     def save(self, *args, **kwargs):
+        if not self.active:
+            self.active = 1
+
         return super(Board, self).save(*args, **kwargs)
 
 
+class BoardTermRel(models.Model):
+    term = models.ForeignKey(Term)
+    game = models.ForeignKey(Game)
+    board = models.ForeignKey(Board)
+    order = models.IntegerField(default=1)
 
 class GameRel(models.Model):
     term = models.ForeignKey(Term)
