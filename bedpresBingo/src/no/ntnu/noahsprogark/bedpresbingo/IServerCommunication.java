@@ -8,4 +8,13 @@ public interface IServerCommunication {
 	 */
 	public String[] getWordsFromServer();
 	
+	public void joinGame();
+	
+	public String getSessionID();
+	
+	public String[] getWordsForPlayer();
+	
+	public Boolean registerWord();
+	
+	public void getStatus();
 }
