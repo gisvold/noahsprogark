@@ -56,6 +56,14 @@ class Game(models.Model):
 
         return super(Game, self).save(*args, **kwargs)
 
+class Board(models.Model):
+    player = models.ForeignKey(Player)
+    game = models.ForeignKey(Game)
+
+    def save(self, *args, **kwargs):
+        return super(Board, self).save(*args, **kwargs)
+
+
 
 class GameRel(models.Model):
     term = models.ForeignKey(Term)
