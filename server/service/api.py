@@ -1,6 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource
-from service.models import Game, Term, Company, GameRel
+from service.models import Game, Term, Board, Company, GameRel, BoardTermRel
 
 class TermResource(ModelResource):
 
@@ -27,3 +27,7 @@ class GameResource(ModelResource):
         excludes = ['create_date',]
 
 
+class BoardResource(ModelResource):
+
+    class Meta:
+        queryset = Game.objects.all()
