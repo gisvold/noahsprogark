@@ -2,11 +2,11 @@ package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 
 public class GameActivity extends Activity {
 	private String[] words;
-	private BingoView view;
+	private BingoView view = null;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_screen);
@@ -19,12 +19,10 @@ public class GameActivity extends Activity {
 		}
 		int dim = (int) rawDim;
 
-		view = (BingoView) findViewById(R.id.bingo);
-		view.buildBoard(words, dim);
-	}
+		view = (BingoView) findViewById(R.id.bingoview);
+		System.out.println(R.id.bingoview);
+		System.out.println(view);
+//		view.buildBoard(words, dim);
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
 	}
 }
