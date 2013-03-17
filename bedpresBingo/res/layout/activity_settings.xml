@@ -26,7 +26,7 @@
     </EditText>
 
     <Button
-        android:id="@+id/PlayerName"
+        android:id="@+id/OKButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/PlayerNameField"
