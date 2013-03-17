@@ -1,6 +1,19 @@
+import hashlib
+import time
 from tastypie.utils.timezone import now
 from django.db import models
 from django.template.defaultfilters import slugify
+
+
+class Player(models.Model):
+    name = models.CharField(max_length=200)
+    sessionId = models.CharField(max_length=50)
+
+    def save(self, *args, **kwargs):
+        if not self.sessionId:
+            self.sessionId = hashlib.md5(self.name + str(time.time())).hexdigest()
+        return super(Player, self).save(*args, **kwargs)
+
 
 
 class Term(models.Model):
@@ -48,4 +61,3 @@ class GameRel(models.Model):
     term = models.ForeignKey(Term)
     game = models.ForeignKey(Game)
     order = models.IntegerField(default=1)
-
