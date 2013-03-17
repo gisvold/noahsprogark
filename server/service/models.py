@@ -44,7 +44,7 @@ class Game(models.Model):
     company = models.ForeignKey(Company)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
-    terms = models.ManyToManyField(Term, related_name='terms', through='GameRel')
+    terms = models.ManyToManyField(Term, through='GameRel')
     create_date = models.DateTimeField(default=now)
 
     def __unicode__(self):
