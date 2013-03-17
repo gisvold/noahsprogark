@@ -17,7 +17,7 @@ public class BingoCell {
 		this.word = word;
 		this.bounds = bounds;
 		p.setTextSize(textSize);
-		p.setColor(Color.BLACK);
+		p.setColor(Color.WHITE);
 		
 		dx = (int) p.measureText(word) / 2;
 		dy = (int) (-p.ascent() + p.descent()) / 2;
