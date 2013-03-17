@@ -1,7 +1,5 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
-import android.webkit.WebResourceResponse;
-import org.apache.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,69 +7,67 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ServerCommunication implements IServerCommunication {
 
-   /* private WebResourceResponse webResource;
-    private ClientResponse clientResponse; */
     private final String SERVER_ROOT_URI = "http://78.91.83.248:8000/api/game/";
     private final String JSON_FORMAT_URI = "?format=json";
     private URL requestURL;
-    URLConnection connection;
-    Scanner scanner;
-    String response;
-    JSONObject jsonResponse;
-    private String[] games;
-    private String[] words;
+    private URLConnection connection;
+    private Scanner scanner;
+    private String response;
+    private JSONObject jsonResponse;
+    private ArrayList<JSONObject> terms;
+    private ArrayList<String> words;
 
-    ServerCommunication(){
+    ServerCommunication(int gameID){
 
-        games = new String[parseJSONResponse(httpRequest.toString()).length];
-        words = new String[16];
+        terms = new ArrayList<JSONObject>();
+        words = new ArrayList<String>();
 
         try{
-            requestURL = new URL(SERVER_ROOT_URI);
+            requestURL = new URL(SERVER_ROOT_URI + gameID + JSON_FORMAT_URI);
             connection = requestURL.openConnection();
             scanner = new Scanner(requestURL.openStream());
 
         }
         catch(MalformedURLException e){
-            System.err.println(e.getMessage());
+           e.printStackTrace();
         }
         catch (IOException e){
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         connection.setDoOutput(true);
 
         response = scanner.useDelimiter("\\Z").next();
-        jsonResponse = parseJSONResponse(response);
+        words.add(getWordsFromServer(response));
         scanner.close();
 
     }
 
+    @Override
+    public String getWordsFromServer(String response) {
 
-    public JSONObject parseJSONResponse(String jsonResponse) {
-
-        JSONObject json;
         try {
-            json = new JSONObject(jsonResponse);
-            JSONObject result = json.getJSONObject("objects");
-            games = result.getString("Timestamp");
+            jsonResponse = new JSONObject(response);
+            terms.add(jsonResponse.getJSONObject("terms"));
 
-        } catch (JSONException e) {
+            for( JSONObject term : terms){
+                return terms.getClass().getField("term").toString();
+            }
+
+
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return json;
-    }
-
-    @Override
-    public String[] getWordsFromServer() {
-        for (int i = 0; i < words.length; i++) {
-            words[i] = "";
+        catch(NoSuchFieldException e){
+             e.printStackTrace();
         }
-        return words;
+
+        return "";
     }
 }
 
