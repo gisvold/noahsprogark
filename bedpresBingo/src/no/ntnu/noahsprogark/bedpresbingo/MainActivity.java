@@ -23,12 +23,16 @@ public class MainActivity extends Activity {
         findViewById(R.id.adminButton).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), Settings_Activity.class);
+				startActivityForResult(i, 1);
 				System.out.println("ADMIN");
 			}
 		});
         findViewById(R.id.settingsButton).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), Admin_Activity.class);
+				startActivityForResult(i, 2);
 				System.out.println("SETTINGS");
 			}
 		});
