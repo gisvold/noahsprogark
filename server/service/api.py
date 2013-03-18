@@ -28,6 +28,9 @@ class GameResource(ModelResource):
 
 
 class BoardResource(ModelResource):
-
+    terms = fields.ToManyField(BoardTermRel, 'boardtermrel_set', related_name='term', full=True)
     class Meta:
         queryset = Game.objects.all()
+        resource_name = 'board'
+        include_resource_uri = False
+        excludes = ['create_date',]
