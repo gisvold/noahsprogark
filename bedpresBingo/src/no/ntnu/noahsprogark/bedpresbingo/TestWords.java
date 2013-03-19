@@ -4,10 +4,18 @@ public class TestWords implements IServerCommunication {
 
 	@Override
 	public String[] getWordsFromServer() {
-		String[] words = new String[16];
-		for (int i = 0; i < words.length; i++) {
-			words[i] = "Hello " + i;
-		}
+		String[] words = { "Kvinneandel", "Sommerjobb", "Fagdag",
+				"Lønningspils", "Sosialt", "Java", "Norges beste arbeidsplass",
+				"Toppturer", "Internasjonalt selskap", "Kvinneandel",
+				"Sommerjobb", "Fagdag", "Lønningspils", "Sosialt", "Java",
+				"Norges beste arbeidsplass", "Toppturer",
+				"Internasjonalt selskap", "Kvinneandel", "Sommerjobb",
+				"Fagdag", "Lønningspils", "Sosialt", "Java",
+				"Norges beste arbeidsplass" };
+		// String[] words = new String[25];
+		// for (int i = 0; i < words.length; i++) {
+		// words[i] = "Hello " + i;
+		// }
 		return words;
 	}
 

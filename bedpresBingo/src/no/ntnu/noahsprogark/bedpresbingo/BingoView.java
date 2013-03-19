@@ -56,13 +56,13 @@ public class BingoView extends ImageView {
 			bounds.right = CELL_MARGIN_LEFT + CELL_WIDTH;
 		}
 	}
-	
+
 	@Override
 	public void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		buildBoard();
 		super.onLayout(changed, left, top, right, bottom);
 	}
-	
+
 	@Override
 	protected void onDraw(Canvas c) {
 		super.onDraw(c);

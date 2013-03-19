@@ -3,6 +3,7 @@ package no.ntnu.noahsprogark.bedpresbingo;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
 public class BingoCell {
@@ -11,20 +12,22 @@ public class BingoCell {
 	private Rect bounds;
 	private Paint p = new Paint(Paint.SUBPIXEL_TEXT_FLAG
 			| Paint.ANTI_ALIAS_FLAG);
-	private int dx, dy;
 
 	public BingoCell(String word, Rect bounds, float textSize) {
 		this.word = word;
 		this.bounds = bounds;
 		p.setTextSize(textSize);
 		p.setColor(Color.WHITE);
-		
-		dx = (int) p.measureText(word) / 2;
-		dy = (int) (-p.ascent() + p.descent()) / 2;
 	}
-	
+
 	protected void draw(Canvas c) {
-		c.drawText(word, bounds.centerX() - dx, bounds.centerY() + dy, p);
+		Paint frame = new Paint();
+		frame.setColor(Color.GREEN);
+		frame.setStyle(Style.STROKE);
+		c.drawRect(bounds, frame);
+		TextRect tr = new TextRect(p);
+		tr.prepare(word, bounds.width(), bounds.height());
+		tr.draw(c, bounds.left + 8, bounds.top + 8);
 	}
 
 	public boolean isSelected() {
