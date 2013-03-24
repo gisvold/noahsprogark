@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements
+		BingoView.OnCellTouchListener {
 	private BingoView view = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,15 @@ public class GameActivity extends Activity {
 		Log.d("Derp", "View: " + view);
 		Log.d("Derp", "ID: " + R.id.bingoview);
 		Log.d("Derp", "Dim: " + dim);
+		view.setOnCellTouchListener(this);
 		view.setWords(words);
 		view.setDim(dim);
 		view.buildBoard();
 
+	}
+
+	@Override
+	public void onTouch(BingoCell c) {
+		Log.d("CellTouch", c.word);
 	}
 }

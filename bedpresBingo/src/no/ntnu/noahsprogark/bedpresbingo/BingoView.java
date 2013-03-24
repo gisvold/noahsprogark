@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 
 public class BingoView extends ImageView {
@@ -17,6 +18,11 @@ public class BingoView extends ImageView {
 
 	private BingoCell[][] board;
 	private String[] words;
+	private OnCellTouchListener octl = null;
+
+	public interface OnCellTouchListener {
+		public void onTouch(BingoCell c);
+	}
 
 	public BingoView(Context c) {
 		this(c, null);
@@ -58,7 +64,8 @@ public class BingoView extends ImageView {
 	}
 
 	@Override
-	public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+	public void onLayout(boolean changed, int left, int top, int right,
+			int bottom) {
 		buildBoard();
 		super.onLayout(changed, left, top, right, bottom);
 	}
@@ -75,5 +82,22 @@ public class BingoView extends ImageView {
 
 	public void setDim(int dim) {
 		board = new BingoCell[dim][dim];
+	}
+
+	public void setOnCellTouchListener(OnCellTouchListener octl) {
+		this.octl = octl;
+	}
+
+	public boolean onTouchEvent(MotionEvent e) {
+		if (octl != null) {
+			for (BingoCell[] bc : board) {
+				for (BingoCell b : bc) {
+					if (b.doesHit((int) e.getX(), (int) e.getY())) {
+						octl.onTouch(b);
+					}
+				}
+			}
+		}
+		return super.onTouchEvent(e);
 	}
 }

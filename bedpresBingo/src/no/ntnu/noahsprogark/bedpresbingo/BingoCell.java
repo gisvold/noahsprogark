@@ -7,7 +7,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
 public class BingoCell {
-	private String word;
+	public String word;
 	private boolean selected;
 	private Rect bounds;
 	private Paint p = new Paint(Paint.SUBPIXEL_TEXT_FLAG
@@ -22,12 +22,12 @@ public class BingoCell {
 
 	protected void draw(Canvas c) {
 		Paint frame = new Paint();
-		frame.setColor(Color.GREEN);
+		frame.setColor(Color.WHITE);
 		frame.setStyle(Style.STROKE);
 		c.drawRect(bounds, frame);
 		TextRect tr = new TextRect(p);
-		tr.prepare(word, bounds.width(), bounds.height());
-		tr.draw(c, bounds.left + 8, bounds.top + 8);
+		tr.prepare(word, bounds.width() - 8, bounds.height() - 8);
+		tr.draw(c, bounds.left + 4, bounds.top + 4);
 	}
 
 	public boolean isSelected() {
@@ -36,5 +36,9 @@ public class BingoCell {
 
 	public String getWord() {
 		return word;
+	}
+	
+	public boolean doesHit(int x, int y) {
+		return bounds.contains(x, y);
 	}
 }
