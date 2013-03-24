@@ -41,6 +41,9 @@ public class BingoView extends ImageView {
 		CELL_WIDTH = (int) r.getDimension(R.dimen.cell_width);
 		CELL_TEXT_SIZE = r.getDimension(R.dimen.cell_text_size);
 		INSTANCE = this;
+		words = new String[1];
+		words[0] = "ERROR";
+		board = new BingoCell[1][1];
 	}
 
 	public void setWords(String[] words) {
@@ -51,6 +54,7 @@ public class BingoView extends ImageView {
 		Rect bounds = new Rect(CELL_MARGIN_LEFT, CELL_MARGIN_TOP, CELL_WIDTH
 				+ CELL_MARGIN_LEFT, CELL_HEIGHT + CELL_MARGIN_TOP);
 		int k = 0;
+
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				board[i][j] = new BingoCell(words[k++], new Rect(bounds),

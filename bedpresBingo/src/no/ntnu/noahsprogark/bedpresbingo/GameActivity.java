@@ -2,7 +2,6 @@ package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 public class GameActivity extends Activity implements
 		BingoView.OnCellTouchListener {
@@ -21,9 +20,6 @@ public class GameActivity extends Activity implements
 		int dim = (int) rawDim;
 
 		view = BingoView.INSTANCE;
-		Log.d("Derp", "View: " + view);
-		Log.d("Derp", "ID: " + R.id.bingoview);
-		Log.d("Derp", "Dim: " + dim);
 		view.setOnCellTouchListener(this);
 		view.setWords(words);
 		view.setDim(dim);
@@ -33,6 +29,7 @@ public class GameActivity extends Activity implements
 
 	@Override
 	public void onTouch(BingoCell c) {
-		Log.d("CellTouch", c.word);
+		c.toggleSelected();
+		view.invalidate();
 	}
 }

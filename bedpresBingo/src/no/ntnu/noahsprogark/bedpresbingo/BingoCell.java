@@ -22,8 +22,14 @@ public class BingoCell {
 
 	protected void draw(Canvas c) {
 		Paint frame = new Paint();
-		frame.setColor(Color.WHITE);
-		frame.setStyle(Style.STROKE);
+		if (selected) {
+			frame.setColor(Color.GREEN);
+			p.setColor(Color.BLACK);
+		} else {
+			frame.setColor(Color.WHITE);
+			frame.setStyle(Style.STROKE);
+			p.setColor(Color.WHITE);
+		}
 		c.drawRect(bounds, frame);
 		TextRect tr = new TextRect(p);
 		tr.prepare(word, bounds.width() - 8, bounds.height() - 8);
@@ -34,10 +40,14 @@ public class BingoCell {
 		return selected;
 	}
 
+	public void toggleSelected() {
+		selected = !selected;
+	}
+
 	public String getWord() {
 		return word;
 	}
-	
+
 	public boolean doesHit(int x, int y) {
 		return bounds.contains(x, y);
 	}

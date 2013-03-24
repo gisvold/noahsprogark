@@ -8,14 +8,7 @@ public class TestWords implements IServerCommunication {
 				"Lønningspils", "Sosialt", "Java", "Norges beste arbeidsplass",
 				"Toppturer", "Internasjonalt selskap", "Kvinneandel",
 				"Sommerjobb", "Fagdag", "Lønningspils", "Sosialt", "Java",
-				"Norges beste arbeidsplass", "Toppturer",
-				"Internasjonalt selskap", "Kvinneandel", "Sommerjobb",
-				"Fagdag", "Lønningspils", "Sosialt", "Java",
-				"Norges beste arbeidsplass" };
-		// String[] words = new String[25];
-		// for (int i = 0; i < words.length; i++) {
-		// words[i] = "Hello " + i;
-		// }
+				"Norges beste arbeidsplass"};
 		return words;
 	}
 
