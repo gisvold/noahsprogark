@@ -16,14 +16,26 @@
         <activity
             android:name="no.ntnu.noahsprogark.bedpresbingo.MainActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:name="no.ntnu.noahsprogark.bedpresbingo.GameActivity"></activity>
+        <activity
+            android:name="no.ntnu.noahsprogark.bedpresbingo.GameActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="no.ntnu.noahsprogark.bedpresbingo.SettingsActivity"
+            android:label="@string/title_activity_settings_" >
+        </activity>
+        <activity
+            android:name="no.ntnu.noahsprogark.bedpresbingo.AdminActivity"
+            android:label="@string/title_activity_admin_" >
+        </activity>
     </application>
 
 </manifest>

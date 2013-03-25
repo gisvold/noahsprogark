@@ -40,23 +40,22 @@ public class ServerCommunication implements IServerCommunication {
         connection.setDoOutput(true);
 
         response = scanner.useDelimiter("\\Z").next();
-        words.add(getWordsFromServer(response));
+        //words.add(getWordsFromServer());
         scanner.close();
 
     }
 
     @Override
-    public String getWordsFromServer(String response) {
+    public String[] getWordsFromServer() {
 
         try {
             jsonResponse = new JSONObject(response);
             terms.add(jsonResponse.getJSONObject("terms"));
 
             for (JSONObject term : terms) {
-                return terms.getClass().getField("term").toString();      //TODO incorrect returns
+                words.add((terms.getClass().getField("term").toString()));
 
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -64,7 +63,32 @@ public class ServerCommunication implements IServerCommunication {
             e.printStackTrace();
         }
 
-        return "";
+        return words.toArray(new String[words.size()]);
+    }
+
+    @Override
+    public void joinGame() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getSessionID() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getWordsForPlayer() {
+        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Boolean registerWord() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void getStatus() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
 

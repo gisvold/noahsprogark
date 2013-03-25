@@ -7,5 +7,9 @@
     <string name="admin_text">Administration</string>
     <string name="settings">Settings</string>
     <string name="new_game">New Game</string>
+    <string name="title_activity_settings_">Settings_Activity</string>
+    <string name="title_activity_admin_">Admin_Activity</string>
+    <string name="PlayerName">What is your name?</string>
+    <string name="OK">OK</string>
 
 </resources>

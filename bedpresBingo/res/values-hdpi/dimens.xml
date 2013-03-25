@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="cell_width">150px</dimen>
+<dimen name="cell_heigh">80px</dimen>
+<dimen name="cell_margin_top">20px</dimen>
+<dimen name="cell_margin_left">20px</dimen>
+<dimen name="cell_text_size">20px</dimen>
+</resources>

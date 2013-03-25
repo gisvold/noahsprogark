@@ -2,45 +2,34 @@ package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 
-public class GameActivity extends Activity {
-	private String[] words;
+public class GameActivity extends Activity implements
+		BingoView.OnCellTouchListener {
+	private BingoView view = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.game_screen);
 		IServerCommunication s = new TestWords();
-		this.words = s.getWordsFromServer();
+		String[] words = s.getWordsFromServer();
 		double rawDim = Math.sqrt(words.length);
 		if ((int) rawDim != rawDim) {
 			throw new IllegalArgumentException(
 					"The array returned from the server was not square.");
 		}
 		int dim = (int) rawDim;
-		for (int i = 0; i < dim; i++) {
-			for (int j = 0; j < dim; j++) {
-				String word = words[i + j];
-			}
-		}
-		switch (dim) {
-		case 3:
-			setContentView(R.layout.game_layout_3x3);
-			break;
-		case 4:
-			setContentView(R.layout.game_layout_4x4);
-			break;
-		case 5:
-			setContentView(R.layout.game_layout_5x5);
-			break;
-		default:
-			setContentView(R.layout.game_layout_err);
-			break;
-		}
+
+		view = BingoView.INSTANCE;
+		view.setOnCellTouchListener(this);
+		view.setWords(words);
+		view.setDim(dim);
+		view.buildBoard();
+
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
+	@Override
+	public void onTouch(BingoCell c) {
+		c.toggleSelected();
+		view.invalidate();
 	}
-
 }
