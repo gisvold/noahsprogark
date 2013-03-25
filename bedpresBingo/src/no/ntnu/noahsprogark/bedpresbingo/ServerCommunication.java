@@ -22,21 +22,19 @@ public class ServerCommunication implements IServerCommunication {
     private ArrayList<JSONObject> terms;
     private ArrayList<String> words;
 
-    ServerCommunication(int gameID){
+    ServerCommunication(int gameID) {
 
         terms = new ArrayList<JSONObject>();
         words = new ArrayList<String>();
 
-        try{
+        try {
             requestURL = new URL(SERVER_ROOT_URI + gameID + JSON_FORMAT_URI);
             connection = requestURL.openConnection();
             scanner = new Scanner(requestURL.openStream());
 
-        }
-        catch(MalformedURLException e){
-           e.printStackTrace();
-        }
-        catch (IOException e){
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         connection.setDoOutput(true);
@@ -54,17 +52,16 @@ public class ServerCommunication implements IServerCommunication {
             jsonResponse = new JSONObject(response);
             terms.add(jsonResponse.getJSONObject("terms"));
 
-            for( JSONObject term : terms){
-                return terms.getClass().getField("term").toString();
+            for (JSONObject term : terms) {
+                return terms.getClass().getField("term").toString();      //TODO incorrect returns
+
             }
 
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-        }
-        catch(NoSuchFieldException e){
-             e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
 
         return "";
