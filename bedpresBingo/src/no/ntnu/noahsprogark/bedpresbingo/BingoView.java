@@ -88,6 +88,55 @@ public class BingoView extends ImageView {
 		board = new BingoCell[dim][dim];
 	}
 
+	public BingoType hasBingo() {
+		int size = board.length;
+		int numOfBingos = 0;
+		int maxBingos = (size * 2) + 2;
+		BingoType type;
+
+		for (int i = 0; i < board.length; i++) {
+			int rowTrue = 0;
+			int colTrue = 0;
+			for (int j = 0; j < board[i].length; j++) {
+				if (board[i][j].isSelected())
+					rowTrue++;
+				if (board[j][i].isSelected())
+					colTrue++;
+			}
+			if (rowTrue == size)
+				numOfBingos++;
+			if (colTrue == size)
+				numOfBingos++;
+		}
+
+		int diagTrue = 0;
+		for (int i = 0, j = 0; i < size && j < size; i++, j++) {
+			if (board[i][j].isSelected())
+				diagTrue++;
+		}
+		if (diagTrue == size)
+			numOfBingos++;
+
+		diagTrue = 0;
+		for (int i = 0, j = size - 1; i < size && j >= 0; i++, j--) {
+			if (board[i][j].isSelected())
+				diagTrue++;
+		}
+		if (diagTrue == size)
+			numOfBingos++;
+		if (numOfBingos == 0)
+			type = BingoType.NONE;
+		else if (numOfBingos == maxBingos)
+			type = BingoType.MEGA;
+		else if (numOfBingos == 1)
+			type = BingoType.SINGLE;
+		else if (numOfBingos == 2)
+			type = BingoType.DOUBLE;
+		else
+			type = BingoType.TRIPLE;
+		return type;
+	}
+
 	public void setOnCellTouchListener(OnCellTouchListener octl) {
 		this.octl = octl;
 	}
