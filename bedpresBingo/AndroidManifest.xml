@@ -3,9 +3,10 @@
     package="no.ntnu.noahsprogark.bedpresbingo"
     android:versionCode="1"
     android:versionName="1.0" >
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="17" />
 
     <application
@@ -37,5 +38,4 @@
             android:label="@string/title_activity_admin_" >
         </activity>
     </application>
-
 </manifest>

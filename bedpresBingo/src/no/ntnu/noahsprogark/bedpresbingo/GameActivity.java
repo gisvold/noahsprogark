@@ -10,7 +10,7 @@ public class GameActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_screen);
-		IServerCommunication s = new TestWords();
+		IServerCommunication s = new ServerCommunication(1);
 		String[] words = s.getWordsFromServer();
 		double rawDim = Math.sqrt(words.length);
 		if ((int) rawDim != rawDim) {
