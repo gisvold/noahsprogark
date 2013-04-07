@@ -1,14 +1,29 @@
 \section{Architectural patterns}
 \label{architecturalpatterns}
 
+\subsection{Model View Controller}
 We will be implementing our game using the Model-View-Controller pattern.
+The MVC pattern divides the application into three kinds of components, the Model, the view(s) and controller(s). 
+The controller can send commands to its associated view to change the view's presentation of the model. It may also send commands to the model to update the model's state.
 
+The model notifies its associated views and controllers when there has been a change in its state. This notification allows the views to produce updated output, and the controllers to change the available set of commands.
+
+A view requests from the model the information that it needs to generate an output representation.
+
+
+\subsection{Singleton Pattern}
 The game settings will be shared by all game states by implementing the
 Singleton pattern.
 
+The singleton pattern is a design pattern that restricts the instantiation of a class to one object.
+
+
+\subsection{Client-Server Pattern}
 In order to achieve the multiplayer experience, we will use the client-server
 pattern. We will run a server which all the players will connect to. The server
 will host the game, and relay all necessary data between the different players.
+
+The client-server model assigns one of the two roles to the computers in a network: client or server. A server is a computer system that selectively shares its resources; a client is a computer or computer program that initiates contact with a server to make use of a resource.
 
 
 The server will be implemented using the Model-view-controller pattern. Which
