@@ -1,12 +1,5 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.os.StrictMode;
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -14,6 +7,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.StrictMode;
 
 public class ServerCommunication implements IServerCommunication {
 
@@ -41,13 +40,9 @@ public class ServerCommunication implements IServerCommunication {
 			scanner = new Scanner(is);
 
 		} catch (MalformedURLException e) {
-			Log.d("DERP", "MALFORMED" + e.toString());
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.d("DERP", "IOEx" + e.toString());
 			e.printStackTrace();
-		} catch (Exception e) {
-			Log.d("DERP", "Ex" + e.toString());
 		}
 
 		response = scanner.useDelimiter("\\Z").next();
