@@ -25,6 +25,7 @@ public class ServerCommunication implements IServerCommunication {
     private JSONObject jsonResponse;
     private JSONArray terms;
     private ArrayList<String> words;
+    private SessionID sessionID;
 
     ServerCommunication(int gameID) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -51,6 +52,8 @@ public class ServerCommunication implements IServerCommunication {
 
         response = scanner.useDelimiter("\\Z").next();
         scanner.close();
+
+        sessionID = new SessionID();
     }
 
     @Override
@@ -77,9 +80,13 @@ public class ServerCommunication implements IServerCommunication {
 
     }
 
+    /**
+     * @return sessionID User ID for participation in current game.
+     * Makes it possible to reconnect to a game.
+     */
     @Override
-    public String getSessionID() {
-        return null;
+    public SessionID getSessionID() {
+        return sessionID;
     }
 
     @Override

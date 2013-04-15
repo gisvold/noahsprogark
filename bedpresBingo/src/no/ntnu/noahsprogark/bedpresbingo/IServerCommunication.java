@@ -11,7 +11,7 @@ public interface IServerCommunication {
 
     public void joinGame();
 
-    public String getSessionID();
+    public SessionID getSessionID();
 
     public String[] getWordsForPlayer();
 
