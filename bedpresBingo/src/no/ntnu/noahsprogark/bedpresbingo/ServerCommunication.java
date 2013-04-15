@@ -45,8 +45,13 @@ public class ServerCommunication implements IServerCommunication {
 			e.printStackTrace();
 		}
 
-		response = scanner.useDelimiter("\\Z").next();
+		StringBuilder sb = new StringBuilder();
+
+		while (scanner.hasNext()) {
+			sb.append(scanner.nextLine());
+		}
 		scanner.close();
+		response = sb.toString();
 	}
 
 	@Override
