@@ -50,6 +50,7 @@ public class ServerCommunication implements IServerCommunication {
 		while (scanner.hasNext()) {
 			sb.append(scanner.nextLine());
 		}
+		System.out.println("lol");
 		scanner.close();
 		response = sb.toString();
 	}
