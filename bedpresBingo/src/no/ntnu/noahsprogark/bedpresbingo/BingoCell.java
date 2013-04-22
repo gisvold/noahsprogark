@@ -25,10 +25,21 @@ public class BingoCell {
 		if (selected) {
 			frame.setColor(Color.GREEN);
 			p.setColor(Color.BLACK);
+			if (word.equals(BingoView.goldenWord)) {
+				p.setFakeBoldText(true);
+				p.setColor(Color.MAGENTA);
+			}
+
 		} else {
-			frame.setColor(Color.WHITE);
-			frame.setStyle(Style.STROKE);
-			p.setColor(Color.WHITE);
+			if (word.equals(BingoView.goldenWord)) {
+				frame.setColor(Color.YELLOW);
+				p.setColor(Color.BLACK);
+
+			} else {
+				frame.setColor(Color.WHITE);
+				frame.setStyle(Style.STROKE);
+				p.setColor(Color.WHITE);
+			}
 		}
 		c.drawRect(bounds, frame);
 		TextRect tr = new TextRect(p);
