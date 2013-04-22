@@ -16,7 +16,7 @@ import android.os.StrictMode;
 
 public class ServerCommunication implements IServerCommunication {
 
-	private final String SERVER_ROOT_URI = "http://78.91.82.168:8000/api/game/";
+	private final String SERVER_ROOT_URI = "http://78.91.82.215:8000/api/game/";
 	private final String JSON_FORMAT_URI = "?format=json";
 	private URL requestURL;
 	private URLConnection connection;
