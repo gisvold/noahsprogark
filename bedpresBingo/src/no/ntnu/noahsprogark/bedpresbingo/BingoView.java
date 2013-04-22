@@ -21,6 +21,7 @@ public class BingoView extends ImageView {
 	public static BingoView INSTANCE = null;
 
 	private BingoCell[][] board;
+	private String goldenWord = "Java";
 	private String[] words;
 	private OnCellTouchListener octl = null;
 
@@ -40,8 +41,6 @@ public class BingoView extends ImageView {
 		super(c, as, defStyle);
 		Resources r = getResources();
 		CELL_HEIGHT = (int) r.getDimension(R.dimen.cell_heigh);
-		CELL_MARGIN_LEFT = (int) r.getDimension(R.dimen.cell_margin_left);
-		CELL_MARGIN_TOP = (int) r.getDimension(R.dimen.cell_margin_top);
 		CELL_WIDTH = (int) r.getDimension(R.dimen.cell_width);
 		CELL_TEXT_SIZE = r.getDimension(R.dimen.cell_text_size);
 		INSTANCE = this;
@@ -118,47 +117,90 @@ public class BingoView extends ImageView {
 		int numOfBingos = 0;
 		int maxBingos = (size * 2) + 2;
 		BingoType type;
+		boolean hasGoldenBingo = false;
 
 		for (int i = 0; i < board.length; i++) {
 			int rowTrue = 0;
 			int colTrue = 0;
+			boolean goldenWordInRow = false;
+			boolean goldenWordInCol = false;
+			
 			for (int j = 0; j < board[i].length; j++) {
-				if (board[i][j].isSelected())
+				if (board[i][j].isSelected()) {
 					rowTrue++;
-				if (board[j][i].isSelected())
+					if (board[i][j].word.equals(goldenWord))
+						goldenWordInRow = true;
+				}
+				if (board[j][i].isSelected()) {
 					colTrue++;
+					if (board[j][i].word.equals(goldenWord))
+						goldenWordInCol = true;
+				}
 			}
-			if (rowTrue == size)
+			if (rowTrue == size) {
 				numOfBingos++;
-			if (colTrue == size)
+				if (goldenWordInRow)
+					hasGoldenBingo = true;
+			}
+			if (colTrue == size) {
 				numOfBingos++;
+				if (goldenWordInCol)
+					hasGoldenBingo = true;
+			}
 		}
 
 		int diagTrue = 0;
+		boolean goldenWordInDiag = false;
 		for (int i = 0, j = 0; i < size && j < size; i++, j++) {
-			if (board[i][j].isSelected())
+			if (board[i][j].isSelected()) {
 				diagTrue++;
+				if (board[i][j].word.equals(goldenWord)) {
+					goldenWordInDiag = true;
+				}
+			}
 		}
-		if (diagTrue == size)
+		if (diagTrue == size) {
 			numOfBingos++;
+			if (goldenWordInDiag)
+				hasGoldenBingo = true;
+		}
 
 		diagTrue = 0;
+		goldenWordInDiag = false;
 		for (int i = 0, j = size - 1; i < size && j >= 0; i++, j--) {
-			if (board[i][j].isSelected())
+			if (board[i][j].isSelected()) {
 				diagTrue++;
+				if (board[i][j].word.equals(goldenWord)) {
+					goldenWordInDiag = true;
+				}
+			}
 		}
-		if (diagTrue == size)
+		if (diagTrue == size) {
 			numOfBingos++;
+			if (goldenWordInDiag)
+				hasGoldenBingo = true;
+		}
+
 		if (numOfBingos == 0)
 			type = BingoType.NONE;
-		else if (numOfBingos == maxBingos)
+		else if (numOfBingos == maxBingos) {
 			type = BingoType.MEGA;
-		else if (numOfBingos == 1)
+			if (hasGoldenBingo)
+				type = BingoType.GOLDEN_MEGA;
+		} else if (numOfBingos == 1) {
 			type = BingoType.SINGLE;
-		else if (numOfBingos == 2)
+			if (hasGoldenBingo)
+				type = BingoType.GOLDEN_SINGLE;
+		} else if (numOfBingos == 2) {
 			type = BingoType.DOUBLE;
-		else
+			if (hasGoldenBingo)
+				type = BingoType.GOLDEN_DOUBLE;
+		} else {
 			type = BingoType.TRIPLE;
+			if (hasGoldenBingo) {
+				type = BingoType.GOLDEN_TRIPLE;
+			}
+		}
 		return type;
 	}
 

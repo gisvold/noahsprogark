@@ -2,6 +2,7 @@ package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class GameActivity extends Activity implements
 		BingoView.OnCellTouchListener {
@@ -30,6 +31,7 @@ public class GameActivity extends Activity implements
 	@Override
 	public void onTouch(BingoCell c) {
 		c.toggleSelected();
+		Log.d("DERP", view.hasBingo().name());
 		view.invalidate();
 	}
 }
