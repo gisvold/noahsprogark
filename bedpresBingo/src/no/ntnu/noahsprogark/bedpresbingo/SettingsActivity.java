@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +38,7 @@ public class SettingsActivity extends Activity {
 				editor.putString("playerName", playerName);
 				editor.commit();
 				Toast t = Toast.makeText(getApplicationContext(), "Navn endret til " + playerName, Toast.LENGTH_SHORT);
+				t.setGravity(Gravity.CENTER, 0, 0);
 				t.show();
 				Log.d("DERP", playerName);
 			}
