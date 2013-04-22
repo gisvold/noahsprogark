@@ -9,7 +9,7 @@
     <string name="new_game">New Game</string>
     <string name="title_activity_settings_">Settings_Activity</string>
     <string name="title_activity_admin_">Admin_Activity</string>
-    <string name="PlayerName">What is your name?</string>
+    <string name="PlayerName">Vennligst skriv inn ditt navn</string>
     <string name="OK">OK</string>
 
 </resources>
