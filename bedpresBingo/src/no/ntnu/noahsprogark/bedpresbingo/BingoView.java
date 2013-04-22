@@ -1,10 +1,14 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -48,6 +52,27 @@ public class BingoView extends ImageView {
 
 	public void setWords(String[] words) {
 		this.words = words;
+	}
+
+	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	public void buildBoard(Activity a) {
+		Display d = a.getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+
+		if (android.os.Build.VERSION.SDK_INT >= 13)
+			d.getSize(size);
+		else {
+			size.x = d.getWidth();
+			size.y = d.getHeight();
+		}
+
+		int boardWidth = board.length * CELL_WIDTH;
+		int boardHeight = board.length * CELL_HEIGHT;
+		CELL_MARGIN_LEFT = (size.x - boardWidth) / 2;
+		CELL_MARGIN_TOP = (size.y - boardHeight) / 2;
+
+		this.buildBoard();
 	}
 
 	public void buildBoard() {

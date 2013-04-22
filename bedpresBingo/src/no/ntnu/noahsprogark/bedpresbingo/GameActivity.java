@@ -23,7 +23,7 @@ public class GameActivity extends Activity implements
 		view.setOnCellTouchListener(this);
 		view.setWords(words);
 		view.setDim(dim);
-		view.buildBoard();
+		view.buildBoard(this);
 
 	}
 
