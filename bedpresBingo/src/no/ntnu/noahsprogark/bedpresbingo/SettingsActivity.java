@@ -1,52 +1,55 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class SettingsActivity extends Activity{
-	
-	private AppPreferences _appPrefs;
-	
+public class SettingsActivity extends Activity {
+
 	TextView playerNameField;
-	Button OKButton;
+	Button okButton;
+	private static String playerName = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		_appPrefs = new AppPreferences(getApplicationContext());
-		setContentView(R.layout.activity_settings);
-		initiateLayout();
-		playerNameField.setText(_appPrefs.getPlayerName());
-		findViewById(R.id.OKButton).setOnClickListener(new OnClickListener() {
 
+		SharedPreferences settings = getPreferences(MODE_PRIVATE);
+		playerName = settings.getString("playerName", "");
+
+		setContentView(R.layout.activity_settings);
+		okButton = (Button) findViewById(R.id.OKButton);
+		playerNameField = (TextView) findViewById(R.id.PlayerNameField);
+		playerNameField.setText(playerName);
+		okButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				_appPrefs.savePlayerName(playerNameField.getText().toString());
-				Log.d("playerNameField", playerNameField.getText().toString());
+				playerName = playerNameField.getText().toString();
+				SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE)
+						.edit();
+				editor.putString("playerName", playerName);
+				editor.commit();
+				Toast t = Toast.makeText(getApplicationContext(), "Navn endret til " + playerName, Toast.LENGTH_SHORT);
+				t.show();
+				Log.d("DERP", playerName);
 			}
 		});
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_settings_, menu);
 		return true;
 	}
-
-
-	private void initiateLayout() {
-		OKButton = (Button)findViewById(R.id.OKButton);
-		playerNameField = (TextView)findViewById(R.id.PlayerNameField);
-	}
 	
+	public static String getName() {
+		return playerName.intern();
+	}
 }
