@@ -1,6 +1,6 @@
 \section{COTS | Components and Technical Constraints}
 \label{sec:COTS}
-%Finished
+%TODO: Check 4.5
 Android is a Linux-based operating system for mobile devices such as
 smartphones and tablets. The Android operating system is an open source project released under the Apache License. Android's user interface is based on direct manipulation using touch inputs that loosely correspond to real-world actions. The application layer framework include
 Java-compatible libraries, which allows developers to program Android
@@ -14,11 +14,15 @@ touch screen as their main input device. It is therefore important that any
 interaction with the game must be designed and arranged in a manner that
 supports the screen constraints. 
 
+The controls of our game is based on touch input from the player. It is therefore important that the buttons and other control objects are of a suitable size (not too small) and that all text is written in a font which is easy to read.
+
 \subsection{Screen Resolution}
 The screen resolution on Android devices vary greatly. To deal with this, we
 will add images of different resolution. The Android compiler will
 automatically compile images with the correct resolution, as long as they are
 provided and correctly placed within the source code.
+
+We will have to deal with this through programmatically changing the board size and position by checking the screen size of the device. 
 
 \subsection{Android device only}
 The game will only run on Android mobile devices and Android emulators.
@@ -26,6 +30,8 @@ The game will only run on Android mobile devices and Android emulators.
 \subsection{Memory Constraints}
 Mobile devices generally have a limited amount of memory. This will most likely
 not be an issue, but still something we need to be aware of.
+
+We don't see any issues with this, since the game is very lightweight.
 
 \subsection{Server performance}
 Our server will be a lightweight server with limited resources. The amount of
