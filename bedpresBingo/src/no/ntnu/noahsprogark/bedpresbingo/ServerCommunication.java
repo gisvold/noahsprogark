@@ -5,32 +5,28 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.StrictMode;
+import android.util.Log;
 
 public class ServerCommunication implements IServerCommunication {
 
-	private final String SERVER_ROOT_URI = "http://78.91.82.215:8000/api/game/";
+	private final String SERVER_ROOT_URI = "http://78.91.83.184:8000/api/v1/board/";
 	private final String JSON_FORMAT_URI = "?format=json";
 	private URL requestURL;
 	private URLConnection connection;
 	private Scanner scanner;
 	private String response;
 	private JSONObject jsonResponse;
-	private JSONArray terms;
-	private ArrayList<String> words;
+	private String[] words;
 
 	ServerCommunication(int gameID) {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 				.detectNetwork().permitNetwork().build());
-
-		words = new ArrayList<String>();
 
 		try {
 			requestURL = new URL(SERVER_ROOT_URI + gameID + "/"
@@ -50,28 +46,27 @@ public class ServerCommunication implements IServerCommunication {
 		while (scanner.hasNext()) {
 			sb.append(scanner.nextLine());
 		}
-		System.out.println("lol");
 		scanner.close();
 		response = sb.toString();
 	}
 
 	@Override
 	public String[] getWordsFromServer() {
-
+		String terms = null;
 		try {
 			jsonResponse = new JSONObject(response);
-			terms = jsonResponse.getJSONArray("terms");
-
-			for (int i = 0; i < terms.length(); i++) {
-				words.add(terms.getJSONObject(i).getJSONObject("term")
-						.getString("term"));
-			}
+			terms = jsonResponse.getString("terms");
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return words.toArray(new String[words.size()]);
+		if (terms == null)
+			this.words = null;
+		else
+			this.words = terms.split(",");
+
+		return this.words;
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -44,7 +43,6 @@ public class GameActivity extends Activity implements
 			t.show();
 		}
 		lastBingo = currentBingo;
-		Log.d("DERP", view.hasBingo().name());
 		view.invalidate();
 	}
 }
