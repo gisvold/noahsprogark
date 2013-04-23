@@ -1,8 +1,6 @@
 from django.db import models
-
 from player.models import Player
 from game.models import Game
-from term.models import Term
 
 class Board(models.Model):
     player = models.ForeignKey(Player)
