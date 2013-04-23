@@ -1,5 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource
+
 from game.models import Game
 from term.api import TermResource
 
@@ -14,7 +15,7 @@ class GameRelResource(ModelResource):
 
 class GameResource(ModelResource):
     # terms = fields.ToManyField(GameRelResource, 'gamerel_set', related_name='term', full=True)
-
+    company = fields.ForeignKey('company.api.CompanyResource', 'company')
     class Meta:
         queryset = Game.objects.all()
         resource_name = 'game'

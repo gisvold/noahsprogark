@@ -12,7 +12,6 @@ class BoardResource(ModelResource):
     # terms = fields.ToManyField('game.api.TermResource', 'terms', related_name='t+')
     game = fields.ForeignKey('game.api.GameResource', 'game')
     player = fields.ForeignKey('player.api.PlayerResource', 'player')
-
     class Meta:
         queryset = Board.objects.all()
         resource_name = 'board'

@@ -7,16 +7,14 @@ from term.models import Term
 class Board(models.Model):
     player = models.ForeignKey(Player)
     game = models.ForeignKey(Game)
+    terms = models.TextField(blank=True, null=True)
+    active = models.BooleanField(default=True)
 
-    g = Game.objects.select_related('game__terms')
-    # print g
-    terms = g.all().order_by('?') #[:(g.board_size*g.board_size)] #models.ManyToManyField(Term, related_name='b+')
-    active = models.IntegerField(max_length=1)
-
-"""
-class BoardTermRel(models.Model):
-    term = models.ForeignKey(Term)
-    game = models.ForeignKey(Game)
-    board = models.ForeignKey(Board)
-    order = models.IntegerField(default=1)
-"""
+    def save(self, *args, **kwargs):
+        termList = []
+        g = Game.objects.get(id=self.game.id)
+        for t in g.terms.all().order_by('?')[:(g.board_size*g.board_size)]:
+            termList.append(t.__str__())
+        print termList
+        self.terms = ",".join(termList)
+        super(Board, self).save()

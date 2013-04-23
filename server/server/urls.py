@@ -6,6 +6,8 @@ from tastypie.api import Api
 from game.api import GameResource
 from term.api import TermResource
 from board.api import BoardResource
+from player.api import PlayerResource
+from company.api import CompanyResource
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -16,6 +18,8 @@ v1_api = Api(api_name='v1')
 v1_api.register(GameResource())
 v1_api.register(TermResource())
 v1_api.register(BoardResource())
+v1_api.register(CompanyResource())
+v1_api.register(PlayerResource())
 
 urlpatterns = patterns('',
     # Examples:
