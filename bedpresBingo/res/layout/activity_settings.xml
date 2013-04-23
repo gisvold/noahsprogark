@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     tools:context=".Settings_Activity" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/OKButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
-        android:text="@string/PlayerName"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignBaseline="@+id/PlayerNameField"
+        android:layout_alignBottom="@+id/PlayerNameField"
+        android:layout_marginLeft="21dp"
+        android:layout_toRightOf="@+id/PlayerNameField"
+        android:text="@string/OK" />
 
     <EditText
         android:id="@+id/PlayerNameField"
@@ -20,17 +20,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
+        android:layout_marginLeft="14dp"
         android:ems="10" >
 
         <requestFocus />
     </EditText>
 
-    <Button
-        android:id="@+id/OKButton"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/PlayerNameField"
-        android:layout_below="@+id/PlayerNameField"
-        android:text="@string/OK" />
+        android:layout_alignLeft="@+id/PlayerNameField"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/PlayerName"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
