@@ -3,44 +3,64 @@ package no.ntnu.noahsprogark.bedpresbingo;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingsActivity extends Activity {
 
 	TextView playerNameField;
-	Button okButton;
-	private static String playerName = "";
+	TextView hostNameField;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		playerName = settings.getString("playerName", "");
+		SharedPreferences settings = getSharedPreferences("settings",
+				MODE_PRIVATE);
+		String playerName = settings.getString("playerName", "");
+		String hostName = settings.getString("hostName", "127.0.0.1:8000");
 
 		setContentView(R.layout.activity_settings);
-		okButton = (Button) findViewById(R.id.OKButton);
+
+		View okNameButton = findViewById(R.id.OKNameButton);
 		playerNameField = (TextView) findViewById(R.id.PlayerNameField);
 		playerNameField.setText(playerName);
-		okButton.setOnClickListener(new OnClickListener() {
+
+		View okHostButton = findViewById(R.id.OKHostButton);
+		hostNameField = (TextView) findViewById(R.id.EnterHostNameField);
+		hostNameField.setText(hostName);
+
+		okNameButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				playerName = playerNameField.getText().toString();
-				SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE)
-						.edit();
+				String playerName = playerNameField.getText().toString();
+				SharedPreferences.Editor editor = getSharedPreferences(
+						"settings", MODE_PRIVATE).edit();
 				editor.putString("playerName", playerName);
 				editor.commit();
-				Toast t = Toast.makeText(getApplicationContext(), "Navn endret til " + playerName, Toast.LENGTH_SHORT);
+				Toast t = Toast.makeText(getApplicationContext(),
+						"Navn endret til " + playerName, Toast.LENGTH_SHORT);
 				t.setGravity(Gravity.CENTER, 0, 0);
 				t.show();
-				Log.d("DERP", playerName);
+			}
+		});
+
+		okHostButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String hostName = hostNameField.getText().toString();
+				SharedPreferences.Editor editor = getSharedPreferences(
+						"settings", MODE_PRIVATE).edit();
+				editor.putString("hostName", hostName);
+				editor.commit();
+				Toast t = Toast.makeText(getApplicationContext(),
+						"Vertsnavn endret til " + hostName, Toast.LENGTH_SHORT);
+				t.setGravity(Gravity.CENTER, 0, 0);
+				t.show();
 			}
 		});
 	}
@@ -49,9 +69,5 @@ public class SettingsActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_settings_, menu);
 		return true;
-	}
-	
-	public static String getName() {
-		return playerName.intern();
 	}
 }

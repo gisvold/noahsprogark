@@ -4,36 +4,60 @@
     android:layout_height="match_parent"
     tools:context=".Settings_Activity" >
 
-    <Button
-        android:id="@+id/OKButton"
+    <TextView
+        android:id="@+id/EnterNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/PlayerNameField"
-        android:layout_alignBottom="@+id/PlayerNameField"
-        android:layout_marginLeft="21dp"
-        android:layout_toRightOf="@+id/PlayerNameField"
-        android:text="@string/OK" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/PlayerName"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/PlayerNameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="14dp"
-        android:ems="10" >
+        android:layout_below="@+id/EnterNameText"
+        android:ems="10"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/OKNameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/HostNameText"
+        android:layout_alignTop="@+id/PlayerNameField"
+        android:text="@string/OK" />
+
+    <TextView
+        android:id="@+id/HostNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/OKNameButton"
+        android:layout_marginTop="14dp"
+        android:text="@string/hostNameSetting"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/EnterHostNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/HostNameText"
+        android:ems="10"
+        android:inputType="text" >
 
         <requestFocus />
     </EditText>
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/OKHostButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/PlayerNameField"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:text="@string/PlayerName"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignRight="@+id/HostNameText"
+        android:layout_alignTop="@+id/EnterHostNameField"
+        android:text="@string/OK" />
 
 </RelativeLayout>

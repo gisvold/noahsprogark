@@ -11,5 +11,6 @@
     <string name="title_activity_admin_">Admin_Activity</string>
     <string name="PlayerName">Vennligst skriv inn ditt navn</string>
     <string name="OK">OK</string>
+    <string name="hostNameSetting">Vennligst skriv inn vertsadresse</string>
 
 </resources>

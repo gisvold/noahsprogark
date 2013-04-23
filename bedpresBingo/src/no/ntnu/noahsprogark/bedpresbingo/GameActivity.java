@@ -1,6 +1,7 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -14,7 +15,10 @@ public class GameActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_screen);
-		IServerCommunication s = new ServerCommunication(1);
+		SharedPreferences settings = getSharedPreferences("settings",
+				MODE_PRIVATE);
+		String host = settings.getString("hostName", "127.0.0.1:8000");
+		IServerCommunication s = new ServerCommunication(1, host);
 		String[] words = s.getWordsFromServer();
 		double rawDim = Math.sqrt(words.length);
 		if ((int) rawDim != rawDim) {

@@ -15,7 +15,8 @@ import android.util.Log;
 
 public class ServerCommunication implements IServerCommunication {
 
-	private final String SERVER_ROOT_URI = "http://78.91.83.184:8000/api/v1/board/";
+	private final String PROTOCOL = "http://";
+	private final String API_PATH = "/api/v1/board/";
 	private final String JSON_FORMAT_URI = "?format=json";
 	private URL requestURL;
 	private URLConnection connection;
@@ -24,12 +25,12 @@ public class ServerCommunication implements IServerCommunication {
 	private JSONObject jsonResponse;
 	private String[] words;
 
-	ServerCommunication(int gameID) {
+	ServerCommunication(int gameID, String host) {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 				.detectNetwork().permitNetwork().build());
 
 		try {
-			requestURL = new URL(SERVER_ROOT_URI + gameID + "/"
+			requestURL = new URL(PROTOCOL + host + API_PATH + gameID + "/"
 					+ JSON_FORMAT_URI);
 			connection = requestURL.openConnection();
 			InputStream is = connection.getInputStream();
@@ -42,10 +43,10 @@ public class ServerCommunication implements IServerCommunication {
 		}
 
 		StringBuilder sb = new StringBuilder();
-
 		while (scanner.hasNext()) {
 			sb.append(scanner.nextLine());
 		}
+
 		scanner.close();
 		response = sb.toString();
 	}
