@@ -3,7 +3,8 @@
 
 \subsection{Problems and issues}
 The group encountered some issues regarding meeting hours. As each group
-of the members has very busy scheduals, it was not easy to find a time where the group could have regular meetings where every member
+of the members has very busy scheduals, it was not easy to find a time
+where the group could have regular meetings where every member
 had the opportunity to meet.
 
 Another issue the group encountered
@@ -13,7 +14,9 @@ suitable for a game like ``Bedpres-Bingo'', as it doesn't require game-loops in 
 In the end-phase of the implementation, an inertia was discovered in
 fetching games from the server. This delay was between 3 and 10 seconds,
 and was not desired for a game like ``Bedpres-Bingo'', as users may
-experience the need for quick reconnection to the ongoing game. This was solved by removing the resolving of foreign keys, and resolving the words like a \texttt{String} separated with commas.
+experience the need for quick reconnection to the ongoing game. This
+was solved by removing the resolving of foreign keys, and resolving
+the words like a \texttt{String} separated with commas.
 
 \subsection{Lessons Learned}
 From this project, the group have learned that risk analysis are more
@@ -21,3 +24,8 @@ significant to execution of the workload than previously concidered.
 The absence of cooperation opportunities due to the group members' scheduals,
 made it almost impossible to reach the goal of a fully functioning application
 at due date.
+
+The choice of solution for the server would most probably not be a good
+one for future release, but suffices as a testing environment. An idea
+could be to have a complete server package with possibilities for adding
+words which the hosts can set up prior to the bedpres.
