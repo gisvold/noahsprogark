@@ -10,5 +10,3 @@ class GameResource(ModelResource):
         queryset = Game.objects.all()
         resource_name = 'game'
         include_resource_uri = False
-        excludes = ['create_date',]
-
