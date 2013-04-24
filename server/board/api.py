@@ -1,5 +1,6 @@
 from tastypie.resources import ModelResource
 from tastypie import fields
+from tastypie.authorization import Authorization
 
 from board.models import Board
 
@@ -9,5 +10,6 @@ class BoardResource(ModelResource):
     class Meta:
         queryset = Board.objects.all()
         resource_name = 'board'
-        include_resource_uri = False
+        authorization = Authorization()
         excludes = ['create_date',]
+        always_return_data=True
