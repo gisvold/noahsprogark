@@ -4,8 +4,14 @@
 
 We have chosen MVC, server-client and Singleton patterns in our application.
 
-The MVC pattern was chosen in order to ensure a clean separation of interface and logic. This helps increase modifiability and agrees with the COTS platform way of implementation.
+The MVC pattern was chosen in order to ensure a clean separation of interface and logic. This helps increase modifiability and agrees with the COTS platform way of implementation. The Android SDK is built with MVC in mind, but has it's own way of doing things. The controller and view is more closely knit together, since Android devices has touch input. This will effect how we implement classes. 
 
 The Singleton pattern was chosen to allow for settings that are shared throughout the different parts of the application.
 
 We chose the client-server pattern in order to ensure the multiplayer experience. P2P-pattern was another alternative, but we saw client-server as a better option since we had more experience with this pattern.
+
+There are other ways to create a multiplayer game. I. Eg. may each device create a hotspot for players to join. We chose to separate the client and server so the server would run on a computer since this was the solution we had the most experience with. 
+
+Our experience with developing applications for Android will certainly affect our decisions in terms of chosen frameworks and architecture. There will be unforeseen problems that may effect our architecture. 
+
+
