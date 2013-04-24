@@ -9,4 +9,4 @@ class GameResource(ModelResource):
     class Meta:
         queryset = Game.objects.all()
         resource_name = 'game'
-        include_resource_uri = False
+        ordering = [ 'id' ]
