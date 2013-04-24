@@ -17,19 +17,21 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 public class ServerCommunication {
-	private final String PROTOCOL = "http://";
-	private final String API_PATH = "/api/v1/";
-	private final String BOARD = "board/";
-	private final String PLAYER = "player/";
-	private final String GAME = "game/";
-	private final String PLAYER_NAME_QUERY = "?player__name=";
-	private final String ACTIVE = "&active=true";
-	private final String NEWEST = "?order_by=-id&limit=1";
-	private final String JSON_TAIL = "&format=json";
+	public static final String PROTOCOL = "http://";
+	public static final String API_PATH = "/api/v1/";
+	public static final String BOARD = "board/";
+	public static final String PLAYER = "player/";
+	public static final String GAME = "game/";
+	public static final String PLAYER_NAME_QUERY = "player__name=";
+	public static final String NAME_QUERY = "name=";
+	public static final String ACTIVE = "active=true";
+	public static final String NEWEST = "order_by=-id&limit=1";
+	public static final String JSON_TAIL = "format=json";
 	private String host;
 	private String[] words;
 	private String goldenWord;
 	private String playerName;
+	private Thread pollerThread;
 
 	ServerCommunication(String playerName, String host) {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -50,6 +52,8 @@ public class ServerCommunication {
 			return;
 		}
 
+		String myGameURI = null;
+
 		String response = getNewBoardFromServer(a);
 
 		if (response == null)
@@ -65,8 +69,9 @@ public class ServerCommunication {
 						.getJSONObject(0);
 			}
 			terms = jsonResponse.getString("terms");
-			goldenWord = jsonResponse.getJSONObject("game")
-					.getJSONObject("golden_word").getString("term");
+			JSONObject game = jsonResponse.getJSONObject("game");
+			goldenWord = game.getJSONObject("golden_word").getString("term");
+			myGameURI = game.getString("resource_uri");
 
 		} catch (JSONException e) {
 			Toast t = Toast.makeText(a.getApplicationContext(),
@@ -79,14 +84,17 @@ public class ServerCommunication {
 		if (terms != null)
 			this.words = terms.split(",");
 
+		pollerThread = new Thread(new GameStatusPoller(myGameURI, 1000, host));
+		pollerThread.start();
+
 	}
 
 	private String getNewBoardFromServer(GameActivity a) {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new URL(PROTOCOL + host + API_PATH + BOARD
-					+ PLAYER_NAME_QUERY + playerName + ACTIVE + JSON_TAIL)
-					.openConnection().getInputStream());
+					+ "?" + PLAYER_NAME_QUERY + playerName + "&" + ACTIVE + "&"
+					+ JSON_TAIL).openConnection().getInputStream());
 		} catch (UnknownHostException e) {
 			Toast t = Toast.makeText(a.getApplicationContext(),
 					"Adressen du har lagret til serveren, " + host
@@ -184,7 +192,8 @@ public class ServerCommunication {
 	}
 
 	private String getGameURIFromServer(GameActivity a) {
-		String req = PROTOCOL + host + API_PATH + GAME + NEWEST + JSON_TAIL;
+		String req = PROTOCOL + host + API_PATH + GAME + "?" + NEWEST + "&"
+				+ JSON_TAIL;
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new URL(req).openConnection()
@@ -233,8 +242,8 @@ public class ServerCommunication {
 	}
 
 	private String getPlayerURIFromServer(GameActivity a) {
-		String req = PROTOCOL + host + API_PATH + PLAYER + "?name="
-				+ playerName + JSON_TAIL;
+		String req = PROTOCOL + host + API_PATH + PLAYER + "?" + NAME_QUERY
+				+ playerName + "&" + JSON_TAIL;
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new URL(req).openConnection()

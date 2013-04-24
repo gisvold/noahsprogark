@@ -9,6 +9,7 @@ import android.widget.Toast;
 public class GameActivity extends Activity implements
 		BingoView.OnCellTouchListener {
 	private BingoView view = null;
+	public static String pName = "";
 
 	private BingoType lastBingo = BingoType.NONE;
 
@@ -18,8 +19,8 @@ public class GameActivity extends Activity implements
 		SharedPreferences settings = getSharedPreferences("settings",
 				MODE_PRIVATE);
 		String host = settings.getString("hostName", "127.0.0.1:8000");
-		String playerName = settings.getString("playerName", "");
-		ServerCommunication s = new ServerCommunication(playerName, host);
+		pName = settings.getString("playerName", "");
+		ServerCommunication s = new ServerCommunication(pName, host);
 		s.getBoardFromServer(this);
 		String[] words = s.getWords();
 		String goldenWord = s.getGoldenWord();

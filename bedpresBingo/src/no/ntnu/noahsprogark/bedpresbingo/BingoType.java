@@ -13,4 +13,12 @@ public enum BingoType {
 	public int getValue() {
 		return value;
 	}
+
+	public static BingoType forInt(int i) {
+		for (BingoType bt : values()) {
+			if (bt.value==i)
+				return bt;
+		}
+		throw new IllegalArgumentException("Illegal ID: " + i);
+	}
 }

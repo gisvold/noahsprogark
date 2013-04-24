@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ public class BingoView extends ImageView {
 
 	private BingoCell[][] board;
 	private static String goldenWord = null;
+	private static String currentBingoLeader = null;
+	private static BingoType currentMaxBingo = BingoType.NONE;
 	private String[] words;
 	private OnCellTouchListener octl = null;
 
@@ -124,7 +127,7 @@ public class BingoView extends ImageView {
 			int colTrue = 0;
 			boolean goldenWordInRow = false;
 			boolean goldenWordInCol = false;
-			
+
 			for (int j = 0; j < board[i].length; j++) {
 				if (board[i][j].isSelected()) {
 					rowTrue++;
@@ -224,7 +227,21 @@ public class BingoView extends ImageView {
 	public void setGoldenWord(String word) {
 		goldenWord = word;
 	}
+
 	public static String getGoldenWord() {
 		return goldenWord;
+	}
+
+	public static void updateLeader(String leader, int point) {
+		BingoType bt = BingoType.forInt(point);
+		if (bt.getValue() > currentMaxBingo.getValue()) {
+			currentMaxBingo = bt;
+			if (!leader.equals(GameActivity.pName)
+					&& !GameActivity.pName.equals(currentBingoLeader)) {
+				// TODO Toast
+				Log.d("DERP", leader + " got a " + bt.name() + "!");
+			}
+			currentBingoLeader = leader;
+		}
 	}
 }
