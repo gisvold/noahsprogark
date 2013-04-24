@@ -18,21 +18,30 @@ public class GameActivity extends Activity implements
 		SharedPreferences settings = getSharedPreferences("settings",
 				MODE_PRIVATE);
 		String host = settings.getString("hostName", "127.0.0.1:8000");
-		IServerCommunication s = new ServerCommunication(1, host);
-		String[] words = s.getWordsFromServer();
-		double rawDim = Math.sqrt(words.length);
-		if ((int) rawDim != rawDim) {
-			throw new IllegalArgumentException(
-					"The array returned from the server was not square.");
+		ServerCommunication s = new ServerCommunication(4, host);
+		s.getBoardFromServer(this);
+		String[] words = s.getWords();
+		String goldenWord = s.getGoldenWord();
+		if (words != null) {
+			double rawDim = Math.sqrt(words.length);
+
+			if ((int) rawDim != rawDim) {
+				Toast t = Toast.makeText(getApplicationContext(),
+						"En feil oppsto ved henting av spillebrett",
+						Toast.LENGTH_SHORT);
+				t.setGravity(Gravity.CENTER, 0, 0);
+				t.show();
+			} else {
+				int dim = (int) rawDim;
+
+				view = BingoView.INSTANCE;
+				view.setOnCellTouchListener(this);
+				view.setWords(words);
+				view.setGoldenWord(goldenWord);
+				view.setDim(dim);
+				view.buildBoard(this);
+			}
 		}
-		int dim = (int) rawDim;
-
-		view = BingoView.INSTANCE;
-		view.setOnCellTouchListener(this);
-		view.setWords(words);
-		view.setDim(dim);
-		view.buildBoard(this);
-
 	}
 
 	@Override

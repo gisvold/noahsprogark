@@ -21,7 +21,7 @@ public class BingoView extends ImageView {
 	public static BingoView INSTANCE = null;
 
 	private BingoCell[][] board;
-	public static String goldenWord = "Java";
+	private static String goldenWord = null;
 	private String[] words;
 	private OnCellTouchListener octl = null;
 
@@ -219,5 +219,12 @@ public class BingoView extends ImageView {
 			}
 		}
 		return super.onTouchEvent(e);
+	}
+
+	public void setGoldenWord(String word) {
+		goldenWord = word;
+	}
+	public static String getGoldenWord() {
+		return goldenWord;
 	}
 }

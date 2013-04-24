@@ -25,13 +25,13 @@ public class BingoCell {
 		if (selected) {
 			frame.setColor(Color.GREEN);
 			p.setColor(Color.BLACK);
-			if (word.equals(BingoView.goldenWord)) {
+			if (word.equals(BingoView.getGoldenWord())) {
 				p.setFakeBoldText(true);
 				p.setColor(Color.MAGENTA);
 			}
 
 		} else {
-			if (word.equals(BingoView.goldenWord)) {
+			if (word.equals(BingoView.getGoldenWord())) {
 				frame.setColor(Color.YELLOW);
 				p.setColor(Color.BLACK);
 

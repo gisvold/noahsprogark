@@ -5,8 +5,8 @@ from tastypie.authorization import Authorization
 from board.models import Board
 
 class BoardResource(ModelResource):
-    game = fields.ForeignKey('game.api.GameResource', 'game')
-    player = fields.ForeignKey('player.api.PlayerResource', 'player')
+    game = fields.ForeignKey('game.api.GameResource', 'game', full=True)
+    player = fields.ForeignKey('player.api.PlayerResource', 'player', full=True)
     class Meta:
         queryset = Board.objects.all()
         resource_name = 'board'
