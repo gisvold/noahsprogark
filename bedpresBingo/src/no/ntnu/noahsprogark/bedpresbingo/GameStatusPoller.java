@@ -11,6 +11,10 @@ import java.util.Scanner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Class that continuously polls the game server for updates to the state of who
+ * is leading the bingo game.
+ */
 public class GameStatusPoller implements Runnable {
 	private String gURI;
 	private String host;
