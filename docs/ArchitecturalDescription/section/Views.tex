@@ -39,19 +39,18 @@ notification states. The game ended screen returns to the main menu.
 \end{center}
 
 \subsection{Physical View}
-The client is divided into the shuffled board, the game logic, game query and
-the session info. The server includes the current words, which contain the
-master list of words for the game, and returns a list of $n$ words (where
-$n = x\times x$, and $x$ is the length and width of the game board) to the
-shuffled board of the client. The game state is a two-way communication with
-logic and the list of usable words. The connection pool relates to the session
-info to ensure the connection between client and server is persistent, even
-through disconnections.
 \begin{center}
-\includegraphics[clip=true, width=0.9 \textwidth]{assets/PhysicalView.pdf}
-\captionof{figure}{Physical View}
-\label{ref:gantt}
+\includegraphics[scale=0.5]{Pikks/PhysicalViewFinal}
+\captionof{figure}{Physical view for Bedpres Bingo}
 \end{center}
+
+The system in parted into two subsystems which communicate. The client is the Android application and the server is our server instance which may run on any PC with python. 
+
+The different states and how they relate are shown in the diagram. 
+When a player starts, they initiate a new game(S1). This will make a call to the server(S2), which checks if the player already has a game. If no, the player is added and is added to the list of active players(S3). If yes, the player recieves their old game board(S5). 
+
+When the server adds the player in (S3), a random game board is generated(S4) and the board is sent to the player(S5).
+From the words recieved, a board is made on the Android application (S6). In (S6) the player is in a loop when selecting words. If the word selected results in a bingo, a notification is sent to the server(S7). In (S7) a check is done to check if the player is the first one to get a bingo. If the player is the first one to achieve a bingo a notification is sent to the other players(S10).
 
 \subsection{Consistency among views} 
 \label{sec:consistencyamongviews}
