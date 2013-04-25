@@ -68,7 +68,7 @@ public class ServerCommunication {
 		if (terms != null)
 			this.words = terms.split(",");
 
-		pollerThread = new Thread(new GameStatusPoller(gameURI, 10000, host));
+		pollerThread = new Thread(new GameStatusPoller(gameURI, 3000, host));
 		pollerThread.start();
 
 	}

@@ -62,6 +62,11 @@ public class GameActivity extends Activity implements
 		}
 	}
 
+	public void onResume() {
+		super.onResume();
+		view.resetBingoLeader();
+	}
+
 	public void updateBingo(BingoType bt) {
 		try {
 			s.updateBingo(bt);

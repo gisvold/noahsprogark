@@ -252,4 +252,9 @@ public class BingoView extends ImageView {
 			currentBingoLeader = leader;
 		}
 	}
+
+	public void resetBingoLeader() {
+		currentBingoLeader = "";
+		currentMaxBingo = BingoType.NONE;
+	}
 }
