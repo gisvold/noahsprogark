@@ -1,2 +1,46 @@
 \section{Relationship with architecture}
 \label{relationshipwitharchitecture}
+
+This document describes the inconsistencies between the planned architecture and the implemented architecture. 
+
+Note: Due to the feedback from the staff course regarding the requirement and architectural description documents, we have changed these documents along the way. Too get a full overview of the inconsistencies, one should compare the old version of these documents.
+
+\subsection{Functional Requirements that where implemented}
+
+The following list of functional requirements were implemented as they were planned. 
+
+\begin{enumerate}
+	\item{FR1: Choose board size}
+	\item{FR2: Set player names}
+	\item{FR3: Connect to server}
+	\item{FR4: Recieve board from server}
+	\item{FR5: Place words on playing field}
+	\item{FR6: Cross off words}
+	\item{FR7: Undo function}
+	\item{FR8: Check for bingo}
+	\item{FR9: Check if player is the first to achieve Bingo}
+	\item{FR10: Notify other players that someone achieved Bingo}
+	\item{FR11: Conformity with Android UI Standards}
+	\item{FR12: Continuing existing game}
+	\item{FR15: Golden words}
+\end{enumerate}
+
+
+\subsection{Functional requirements that were implemented to some degree}
+
+\textbf{FR13: Game Over}
+The original intent of the requirement was to enforce us to implement a method for closing the active games and deleting them from the database when a game was finished. The players should be notified that someone has won and that the game is over.
+
+Our implementation deviates in the form of not flushing the database after the game is finished. The database manager will have to manually flush the database for active games. The reason behind this deviation is the many rules for when a game could be finished. Different players may set different rules for how to win. Because of this we could either implement features for changing the rules or implement no features for changing the rules. Due to the complexity of implementing different rules and handling all of them, we chose not to handle this task as originally intended. 
+
+This could have been discovered at an earlier stage. Eg. if the ATAM group were more experienced bingo-players.
+
+
+\subsection{Functional requirements that were not implemented}
+
+\textbf{FR14: Master player}
+The original intent of this functional requirement was to secure against people cheating and crossing off words that were not spoken yet. The admin/master player would cross off words in a admin interface to unlock the words for the other players. 
+
+Our implementation deviates from this since the functionality is not implemented at all. The reasons were several. We found that the amount of network calls to the server would grow exponentially and our lightweight server would probably not be able to handle the connections. We also found the task very complex and had problems trying to figure out how we should implement this. 
+
+This could not have been discovered at an earlier stage. It was hard for us to foresee what was easy and not to implement in Android. With the experience we have built through this project, we know more and will be able to make a better choice in the future. 
