@@ -50,3 +50,4 @@ The main reason for parting this functionality into a separate class is modifiab
 The getBoardFromServer() method will ask the server for a board, and hopefully a string of words is returned, which BingoView later will use to build the board. The method also spawns a pollerThread in order to poll the server for updates regarding other players results.
 
 In order to achieve the goals of availability we have implemented methods for keeping score of a players game. When a player disconnects and then connects again, the getGameURIFromServer will return the game to the player, so the player may continue where he/she was before he/she was disconnected. 
+
