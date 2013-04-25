@@ -3,7 +3,7 @@
 
 \subsection{How to Install the game}
 The game can be run on either an Android device, smart phone or tablet, or
-the Android emulator on a laptop.
+the Android emulator on a computer.
 
 Note that all screenshots are not of actual size.
 
@@ -21,8 +21,27 @@ memory card
 
 \subsection{How to play Bedpres-Bingo}
 
-Before the game is started on the Android application, the server must be started. After the server is started, the players must note the IP-address in order to be sure they connect to the correct server.
-%TODO: Skriv noe mer her!!
+Before the game is started on the Android application, the server must be started.
+
+The server code can be found in the server folder in the delivered archive. The
+server depends on Python, Django and Tastypie. If on a machine with Python installed,
+and with Python's package manager, pip, in the path one can type the following commands
+to get Django and Tastypie set up:
+
+sudo pip install django==1.5
+sudo pip install django-tastypie
+
+Note that the `sudo' keyword is not used on Windows, only Linux and MacOSX.
+
+After this, enter the server directory; once there issue the command:
+
+python manage.py runserver 0.0.0.0:8000
+
+Once this is done, you can enter the IP adress to your server on the Android App on the settings screen
+to be able to connect to it. Note that the above command sets the server to run on port 8000,
+and thus your app needs to connect to the same. For example: If the IP of the machine you run the server
+on is 12.34.56.78, then by issuing the above command you need to enter 12.34.56.78:8000 as the hostname
+in the Android application.
 
 \subsubsection{Start new game}
 In order to initiate a new game, the player will press the New Game-button.
@@ -30,6 +49,11 @@ In order to initiate a new game, the player will press the New Game-button.
 \includegraphics[scale=0.5]{Pikks/Mainmenu}
 \captionof{figure}{Main menu of Bedpres Bingo}
 \end{center}
+
+Note that you will be unable to start a game unless you've set the host name of the server
+as explained above, as well as set a name in the Settings. Note that the settings doesn't save
+until you press the OK button (you will get a pop-up message signifying the setting has changed
+if done correctly).
 
 \subsubsection{Playing Bedres-bingo}
 The main gameplay will be played on the Bingo Board shown below. The game
