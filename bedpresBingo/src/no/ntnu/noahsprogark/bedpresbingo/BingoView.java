@@ -10,10 +10,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class BingoView extends ImageView {
 	private static int CELL_WIDTH;
@@ -249,14 +247,7 @@ public class BingoView extends ImageView {
 					&& !GameActivity.pName.equals(currentBingoLeader)) {
 				final String msg = leader + " fikk en " + bt.name() + " bingo!";
 				Log.d("DERP", msg);
-				ga.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						Toast t = Toast.makeText(ga, msg, Toast.LENGTH_LONG);
-						t.setGravity(Gravity.CENTER, 0, 0);
-						t.show();
-					}
-				});
+				ga.displayToast(msg);
 			}
 			currentBingoLeader = leader;
 		}

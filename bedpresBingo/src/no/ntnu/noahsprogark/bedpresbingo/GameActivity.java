@@ -8,7 +8,6 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -31,32 +30,16 @@ public class GameActivity extends Activity implements
 		try {
 			s.getBoardFromServer();
 		} catch (IllegalArgumentException e) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					"Du må skrive inn et navn i innstillingsskjermen!",
-					Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Du må skrive inn et navn i innstillingsskjermen!");
 		} catch (MalformedURLException e) {
-			Toast t = Toast.makeText(
-					getApplicationContext(),
-					"Vertsnavnet i innstillingsskjermen er ugyldig: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			Log.d("DERP", "getBoardErr: " + e.getMessage());
+			displayToast("Vertsnavnet i innstillingsskjermen er ugyldig: "
+					+ e.getMessage());
 		} catch (IOException e) {
-			Toast t = Toast.makeText(
-					getApplicationContext(),
-					"Det oppsto en feil ved kommunisering med tjener: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Det oppsto en feil ved kommunisering med tjener: "
+					+ e.getMessage());
 		} catch (JSONException e) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra tjeneren: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Det oppsto en feil ved tolkning av data fra tjeneren: "
+					+ e.getMessage());
 		}
 		String[] words = s.getWords();
 		String goldenWord = s.getGoldenWord();
@@ -64,11 +47,7 @@ public class GameActivity extends Activity implements
 			double rawDim = Math.sqrt(words.length);
 
 			if ((int) rawDim != rawDim) {
-				Toast t = Toast.makeText(getApplicationContext(),
-						"En feil oppsto ved henting av spillebrett",
-						Toast.LENGTH_SHORT);
-				t.setGravity(Gravity.CENTER, 0, 0);
-				t.show();
+				displayToast("En feil oppsto ved henting av spillebrett");
 			} else {
 				int dim = (int) rawDim;
 
@@ -87,26 +66,14 @@ public class GameActivity extends Activity implements
 		try {
 			s.updateBingo(bt);
 		} catch (MalformedURLException e) {
-			Toast t = Toast.makeText(
-					getApplicationContext(),
-					"Vertsnavnet i innstillingsskjermen er ugyldig: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			Log.d("DERP", Log.getStackTraceString(e));
+			displayToast("Vertsnavnet i innstillingsskjermen er ugyldig: "
+					+ e.getMessage());
 		} catch (IOException e) {
-			Toast t = Toast.makeText(
-					getApplicationContext(),
-					"Det oppsto en feil ved kommunisering med tjener: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Det oppsto en feil ved kommunisering med tjener: "
+					+ e.getMessage());
 		} catch (JSONException e) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra tjeneren: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Det oppsto en feil ved tolkning av data fra tjeneren: "
+					+ e.getMessage());
 		}
 	}
 
@@ -115,21 +82,21 @@ public class GameActivity extends Activity implements
 		c.toggleSelected();
 		BingoType currentBingo = view.hasBingo();
 		if (currentBingo.getValue() > lastBingo.getValue()) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					"Congratulations you got a " + currentBingo.name()
-							+ " bingo!", Toast.LENGTH_SHORT);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+			displayToast("Gratulerer, du fikk en " + currentBingo.name()
+					+ " bingo!");
 		}
 		lastBingo = currentBingo;
 		view.invalidate();
 	}
 
-	public void displayToast(String msg) {
-		Toast t = Toast.makeText(getApplicationContext(), msg,
-				Toast.LENGTH_LONG);
-		t.setGravity(Gravity.CENTER, 0, 0);
-		t.show();
-
+	public void displayToast(final String msg) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				Toast t = Toast.makeText(GameActivity.this, msg,
+						Toast.LENGTH_LONG);
+				t.setGravity(Gravity.CENTER, 0, 0);
+				t.show();
+			}
+		});
 	}
 }
