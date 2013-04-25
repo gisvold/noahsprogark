@@ -15,11 +15,28 @@ public class TextRect {
 	private String text;
 	private boolean wasCut;
 
+	/**
+	 * Creates a TextRect using the given paint
+	 *
+	 * @param p
+	 *            The paint to use for drawing the text
+	 */
 	public TextRect(Paint p) {
 		this.p = p;
 	}
 
-	public int prepare(String t, int maxW, int maxH) {
+	/**
+	 * Prepares the text for drawing, by calculating where to wrap it, and
+	 * whether or not it will have to be cut to fit.
+	 *
+	 * @param t
+	 *            The text to be drawn
+	 * @param maxW
+	 *            The maximum width available to draw the text on
+	 * @param maxH
+	 *            The maximum height available to draw the text on
+	 */
+	public void prepare(String t, int maxW, int maxH) {
 		lines = 0;
 		textHeight = 0;
 		this.text = t;
@@ -113,9 +130,19 @@ public class TextRect {
 
 			}
 		}
-		return textHeight;
 	}
 
+	/**
+	 * Draws the text on the provided canvas, starting at the point provided.
+	 * Text is appended with "..." if it was cut.
+	 *
+	 * @param canvas
+	 *            The canvas to draw the text on
+	 * @param left
+	 *            The leftmost position of the text
+	 * @param top
+	 *            The top position of the text
+	 */
 	public void draw(Canvas canvas, int left, int top) {
 		if (textHeight == 0)
 			return;
@@ -140,9 +167,5 @@ public class TextRect {
 
 			y += after;
 		}
-	}
-
-	public boolean wasCut() {
-		return wasCut;
 	}
 }
