@@ -56,7 +56,7 @@ public class GameActivity extends Activity implements
 				view.setWords(words);
 				view.setGoldenWord(goldenWord);
 				view.setDim(dim);
-				view.buildBoard(this);
+				view.setupMargins(getWindowManager().getDefaultDisplay());
 				view.setParentActivity(this);
 			}
 		}
