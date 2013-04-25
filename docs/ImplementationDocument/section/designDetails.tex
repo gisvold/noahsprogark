@@ -10,10 +10,12 @@ Each item will be described in detail in the follow subsections.
 
 \begin{itemize}
 	\item \textbf{bedpresBingo.BingoCell} 
-	\item \textbf{bedpresBingo.BingoView} 
+	\item \textbf{bedpresBingo.BingoView}
 	\item \textbf{bedpresBingo.GameActivity}
-	\item \textbf{bedpresBingo.ServerCommunication} 
+  \item \textbf{bedpresBingo.GameStatusPoller} 
 	\item \textbf{bedpresBingo.MainActivity} 
+	\item \textbf{bedpresBingo.ServerCommunication}
+  \item \textbf{bedpresBingo.SettingsActivity} 
 	\item \textbf{Server} 
 \end{itemize}
 
@@ -32,11 +34,16 @@ The BingoView class has methods to work as a controller. The onCellTouchListener
 
 The BingoView class also has some logic in order to check if the player achieves a bingo. The method hasBingo() will run for-loops checking the BingoCell instances if all in a row or column is selected and if a golden word is a part of the row or column.
 
-The Bingo View class will also act as a controller controlling its own view. This is possible because of the way Android is built. When something interesting occurs, eg. you achieve a bingo, another player achieves bingo or something is wrong, a toast\footnote[1]{Not a toast you can eat, but rather a small textline shown on screen for a short period of timeg}. 
+The Bingo View class will also act as a controller controlling its own view. This is possible because of the way Android is built. When something interesting occurs, eg. you achieve a bingo, another player achieves bingo or something is wrong, a toast\footnote[1]{Not a toast you can eat, but rather a small textline shown on screen for a short period of time}.
 
 
 \subsection{bedprisBingo.GameActivity}
 Android is built around having activities for seperate screens in the application. Basically when you change screen, you change activity. The GameActivity class instanciates a BingoView and a ServerCommunication in order to create a game. The class itself does very little.
+
+\subsection{bedpresBingo.GameStatusPoller}
+Tight network class that polls the server for updates to the bingo score and
+the bingo leader. Designed to run in its own thread to not interfere with the game.
+On updates it calls a static method in the BingoView that takes care of notifying the player.
 
 
 \subsection{bedpresBingo.MainActivity}
@@ -52,6 +59,9 @@ The getBoardFromServer() method will ask the server for a board, and hopefully a
 
 In order to achieve the goals of availability we have implemented methods for keeping score of a players game. When a player disconnects and then connects again, the getGameURIFromServer will return the game to the player, so the player may continue where he/she was before he/she was disconnected.
 
+\subsection{bedpresBingo.SettingsActivity}
+Small view that simply facilitates changing the host to connect to and the name of the player. Stores these in the application's
+shared preferences.
 
 \subsection{Server}
 The server keeps track on the players, the active game, a company owning the game, and all the active boards. When a client starts a new game, it basically asks the server for a board on the current running game. The server then checks if this player previsouly had an active board running on this game. If a board is found, the player will receive its old board. if not it will return a new randomized board.
