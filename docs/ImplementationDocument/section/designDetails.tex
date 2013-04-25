@@ -69,3 +69,5 @@ When a player gets a BINGO! It'll notice the server about which kind of bingo it
 The server is written in Python using the Django web framework. Django appears to be a MVC-framework where we mainly will manage the models and the views for data handling and representation. The application will also contain a twist of observer-observable pattern for the client to observe changes on the server.
 
 Inside of django we'll be using a webservice API framework called tastypie. This let us create a REST-style interfaces for our service. With our REST-service the clients only needs to request and send data back and forth with some simple JSON over http.
+
+Each modules of the system is devied into separated apps to easen a later maintenance process, and to easen the development process without cluttering the workspace.
