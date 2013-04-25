@@ -32,7 +32,15 @@ public class ServerCommunication {
 	private String gameURI;
 	private Thread pollerThread;
 
-	ServerCommunication(String playerName, String host) {
+	/**
+	 * Creates the {@link ServerCommunication} object.
+	 *
+	 * @param playerName
+	 *            The name of the current player
+	 * @param host
+	 *            The host name of the server
+	 */
+	public ServerCommunication(String playerName, String host) {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 				.detectNetwork().permitNetwork().build());
 		this.host = host;
@@ -41,10 +49,21 @@ public class ServerCommunication {
 		goldenWord = null;
 	}
 
+	/**
+	 * Gets a playing board, containing the assigned words and golden word, from
+	 * the server. Also initializes the polling thread that runs the
+	 * {@link GameStatusPoller}. Running this method sets all the relevant
+	 * fields of the class.
+	 *
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	public void getBoardFromServer() throws MalformedURLException, IOException,
 			JSONException {
 		if (playerName.equals("")) {
-			throw new IllegalArgumentException("Du må skrive inn et navn i innstillingene!");
+			throw new IllegalArgumentException(
+					"Du må skrive inn et navn i innstillingene!");
 		}
 
 		String response = getNewBoardFromServer();
@@ -73,6 +92,13 @@ public class ServerCommunication {
 
 	}
 
+	/**
+	 * @return The player's current board if it exists; calls a method that
+	 *         creates one if it doesn't.
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	private String getNewBoardFromServer() throws MalformedURLException,
 			IOException, JSONException {
 		Scanner scanner = null;
@@ -97,6 +123,13 @@ public class ServerCommunication {
 			return createBoardOnServer();
 	}
 
+	/**
+	 * @return a new game board based on the player name and the newest game on
+	 *         the server.
+	 * @throws JSONException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
 	private String createBoardOnServer() throws JSONException,
 			MalformedURLException, IOException {
 		String playerURI = getPlayerURIFromServer();
@@ -139,6 +172,12 @@ public class ServerCommunication {
 		return sb.toString();
 	}
 
+	/**
+	 * @return the URI for the newest game on the server.
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	private String getGameURIFromServer() throws MalformedURLException,
 			IOException, JSONException {
 		String req = PROTOCOL + host + API_PATH + GAME + "?" + NEWEST + "&"
@@ -159,6 +198,14 @@ public class ServerCommunication {
 		return retURI;
 	}
 
+	/**
+	 * @return the URI for the player name provided when the object was
+	 *         constructed. If this player doesn't exist on the server, it is
+	 *         created first.
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	private String getPlayerURIFromServer() throws MalformedURLException,
 			IOException, JSONException {
 		String req = PROTOCOL + host + API_PATH + PLAYER + "?" + NAME_QUERY
@@ -214,18 +261,31 @@ public class ServerCommunication {
 
 		JSONObject jso = new JSONObject(sb.toString());
 		retURI = jso.getString("resource_uri");
-		
+
 		return retURI;
 	}
 
+	/**
+	 * @return The words for the bingo board.
+	 */
 	public String[] getWords() {
 		return words;
 	}
 
+	/**
+	 * @return The golden word for the bingo game.
+	 */
 	public String getGoldenWord() {
 		return goldenWord;
 	}
 
+	/**
+	 * Updates the server with the player as the new bingo leader.
+	 * @param bt The new max bingo score.
+	 * @throws JSONException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
 	public void updateBingo(BingoType bt) throws JSONException,
 			MalformedURLException, IOException {
 		String req = PROTOCOL + host + gameURI;
@@ -249,7 +309,7 @@ public class ServerCommunication {
 		dos.writeBytes(updateScore.toString());
 		dos.flush();
 		dos.close();
-		
+
 		huc.getResponseCode();
 	}
 }

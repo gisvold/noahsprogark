@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Simple settings screen that stores the name and host to the
+ * {@link SharedPreferences}
+ */
 public class SettingsActivity extends Activity {
 
 	TextView playerNameField;
@@ -63,11 +66,5 @@ public class SettingsActivity extends Activity {
 				t.show();
 			}
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_settings_, menu);
-		return true;
 	}
 }
