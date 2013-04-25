@@ -21,6 +21,46 @@ of the networking and the base communication with the Android platform.
 \label{ref:gantt}
 \end{center}
 
+\subsubsection{Client/Device}
+
+{\bf Android SDK}
+
+The Android SDK provides the API libraries and developer tool necessary to build, 
+test, and debug apps for Android. This layer gives access to the hardware and 
+functionalities for networking and communication.
+
+
+{\bf Game Logic}
+
+{\bf server communication} - this module contains the functionalities for 
+basic communication and data exchange between the application and the
+remote server
+
+{\bf Model} - data retrieved from the remote server that is stored on the device
+and presented in cells
+
+{\bf Views} - the game board with cells of terms retrieved from the server
+
+
+{\bf GUI}
+
+Our GUI is very basic containing a control panel for inserting the player name, 
+and the server address. The name is used to identify a player on a remote server.
+The board is layed out in cells. The cell count is given by the active game on the server.
+
+\subsubsection{Server/Django}
+
+{\bf Models}: The django models is an abstracted database layer. Underneath these models we'll
+find a MySQL database containing all the data that is handled in the system.
+
+{\bf Views}: As of the Django framework we know that the whole framework over the Model layer acts
+as a view-controller -layer. By view we mean the processesd data given by the models.
+This data is used by the upper layer to respond to requests.
+
+{\bf Logic/REST}: This layer handles all the requests from the clients. In this layer we'll parse the
+incomming request to fetch the right information that is returned.
+
+
 \subsection{Process View}
 The process view shows the process flow in the game, how connections are made
 between states and screens.
