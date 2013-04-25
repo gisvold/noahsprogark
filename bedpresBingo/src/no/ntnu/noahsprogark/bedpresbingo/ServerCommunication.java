@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -13,8 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.StrictMode;
-import android.view.Gravity;
-import android.widget.Toast;
 
 public class ServerCommunication {
 	public static final String PROTOCOL = "http://";
@@ -31,6 +28,8 @@ public class ServerCommunication {
 	private String[] words;
 	private String goldenWord;
 	private String playerName;
+	private String playerURI;
+	private String gameURI;
 	private Thread pollerThread;
 
 	ServerCommunication(String playerName, String host) {
@@ -42,76 +41,44 @@ public class ServerCommunication {
 		goldenWord = null;
 	}
 
-	public void getBoardFromServer(GameActivity a) {
+	public void getBoardFromServer() throws MalformedURLException, IOException,
+			JSONException {
 		if (playerName.equals("")) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Feil: Du må skrive inn et navn i innstillingene!",
-					Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			return;
+			throw new IllegalArgumentException("Du må skrive inn et navn i innstillingene!");
 		}
 
-		String myGameURI = null;
-
-		String response = getNewBoardFromServer(a);
+		String response = getNewBoardFromServer();
 
 		if (response == null)
 			return;
 
 		String terms = null;
 		goldenWord = null;
-		JSONObject jsonResponse = null;
-		try {
-			jsonResponse = new JSONObject(response);
-			if (jsonResponse.has("objects")) {
-				jsonResponse = jsonResponse.getJSONArray("objects")
-						.getJSONObject(0);
-			}
-			terms = jsonResponse.getString("terms");
-			JSONObject game = jsonResponse.getJSONObject("game");
-			goldenWord = game.getJSONObject("golden_word").getString("term");
-			myGameURI = game.getString("resource_uri");
-
-		} catch (JSONException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
+		JSONObject jsonResponse = new JSONObject(response);
+		if (jsonResponse.has("objects")) {
+			jsonResponse = jsonResponse.getJSONArray("objects")
+					.getJSONObject(0);
 		}
+		terms = jsonResponse.getString("terms");
+		playerURI = jsonResponse.getString("player");
+		JSONObject game = jsonResponse.getJSONObject("game");
+		goldenWord = game.getJSONObject("golden_word").getString("term");
+		gameURI = game.getString("resource_uri");
 
 		if (terms != null)
 			this.words = terms.split(",");
 
-		pollerThread = new Thread(new GameStatusPoller(myGameURI, 1000, host));
+		pollerThread = new Thread(new GameStatusPoller(gameURI, 3000, host));
 		pollerThread.start();
 
 	}
 
-	private String getNewBoardFromServer(GameActivity a) {
+	private String getNewBoardFromServer() throws MalformedURLException,
+			IOException, JSONException {
 		Scanner scanner = null;
-		try {
-			scanner = new Scanner(new URL(PROTOCOL + host + API_PATH + BOARD
-					+ "?" + PLAYER_NAME_QUERY + playerName + "&" + ACTIVE + "&"
-					+ JSON_TAIL).openConnection().getInputStream());
-		} catch (UnknownHostException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Adressen du har lagret til serveren, " + host
-							+ ", er ikke et gyldig vertsnavn. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		} catch (IOException e) {
-			Toast t = Toast.makeText(
-					a.getApplicationContext(),
-					"Kunne ikke hente data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		}
-		if (scanner == null)
-			return null;
+		scanner = new Scanner(new URL(PROTOCOL + host + API_PATH + BOARD + "?"
+				+ PLAYER_NAME_QUERY + playerName + "&" + ACTIVE + "&"
+				+ JSON_TAIL).openConnection().getInputStream());
 
 		StringBuilder sb = new StringBuilder();
 		while (scanner.hasNext()) {
@@ -122,26 +89,18 @@ public class ServerCommunication {
 		String res = sb.toString();
 
 		int retSize = 0;
-		try {
-			retSize = new JSONObject(res).getJSONArray("objects").length();
-		} catch (JSONException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			return null;
-		}
+		retSize = new JSONObject(res).getJSONArray("objects").length();
 
 		if (retSize > 0)
 			return res;
 		else
-			return createBoardOnServer(a);
+			return createBoardOnServer();
 	}
 
-	private String createBoardOnServer(GameActivity a) {
-		String playerURI = getPlayerURIFromServer(a);
-		String gameURI = getGameURIFromServer(a);
+	private String createBoardOnServer() throws JSONException,
+			MalformedURLException, IOException {
+		String playerURI = getPlayerURIFromServer();
+		String gameURI = getGameURIFromServer();
 
 		if (playerURI == null || gameURI == null)
 			return null;
@@ -149,39 +108,28 @@ public class ServerCommunication {
 		JSONObject newBoard = new JSONObject();
 		Scanner scanner = null;
 
-		try {
-			newBoard.put("active", true);
-			newBoard.put("game", gameURI);
-			newBoard.put("player", playerURI);
+		newBoard.put("active", true);
+		newBoard.put("game", gameURI);
+		newBoard.put("player", playerURI);
 
-			HttpURLConnection huc = (HttpURLConnection) new URL(PROTOCOL + host
-					+ API_PATH + BOARD).openConnection();
+		HttpURLConnection huc = (HttpURLConnection) new URL(PROTOCOL + host
+				+ API_PATH + BOARD).openConnection();
 
-			huc.setRequestMethod("POST");
-			huc.setRequestProperty("Content-Type", "application/json");
-			huc.setRequestProperty("Content-Length",
-					Integer.toString(newBoard.toString().getBytes().length));
+		huc.setRequestMethod("POST");
+		huc.setRequestProperty("Content-Type", "application/json");
+		huc.setRequestProperty("Content-Length",
+				Integer.toString(newBoard.toString().getBytes().length));
 
-			huc.setUseCaches(false);
-			huc.setDoInput(true);
-			huc.setDoOutput(true);
+		huc.setUseCaches(false);
+		huc.setDoInput(true);
+		huc.setDoOutput(true);
 
-			DataOutputStream dos = new DataOutputStream(huc.getOutputStream());
-			dos.writeBytes(newBoard.toString());
-			dos.flush();
-			dos.close();
+		DataOutputStream dos = new DataOutputStream(huc.getOutputStream());
+		dos.writeBytes(newBoard.toString());
+		dos.flush();
+		dos.close();
 
-			scanner = new Scanner(huc.getInputStream());
-		} catch (JSONException e) {
-			// Ignore, should never fail
-		} catch (MalformedURLException e) {
-			// Ignore, caught earlier
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		}
-
-		if (scanner == null)
-			return null;
+		scanner = new Scanner(huc.getInputStream());
 
 		StringBuilder sb = new StringBuilder();
 		while (scanner.hasNext()) {
@@ -191,31 +139,12 @@ public class ServerCommunication {
 		return sb.toString();
 	}
 
-	private String getGameURIFromServer(GameActivity a) {
+	private String getGameURIFromServer() throws MalformedURLException,
+			IOException, JSONException {
 		String req = PROTOCOL + host + API_PATH + GAME + "?" + NEWEST + "&"
 				+ JSON_TAIL;
-		Scanner scanner = null;
-		try {
-			scanner = new Scanner(new URL(req).openConnection()
-					.getInputStream());
-		} catch (UnknownHostException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Adressen du har lagret til serveren, " + host
-							+ ", er ikke et gyldig vertsnavn. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		} catch (IOException e) {
-			Toast t = Toast.makeText(
-					a.getApplicationContext(),
-					"Kunne ikke hente data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		}
-		if (scanner == null)
-			return null;
-
+		Scanner scanner = new Scanner(new URL(req).openConnection()
+				.getInputStream());
 		StringBuilder sb = new StringBuilder();
 		while (scanner.hasNext()) {
 			sb.append(scanner.nextLine());
@@ -224,47 +153,19 @@ public class ServerCommunication {
 		scanner.close();
 		String res = sb.toString();
 
-		String retURI = null;
-
-		try {
-			retURI = new JSONObject(res).getJSONArray("objects")
-					.getJSONObject(0).getString("resource_uri");
-		} catch (JSONException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			return null;
-		}
+		String retURI = new JSONObject(res).getJSONArray("objects")
+				.getJSONObject(0).getString("resource_uri");
 
 		return retURI;
 	}
 
-	private String getPlayerURIFromServer(GameActivity a) {
+	private String getPlayerURIFromServer() throws MalformedURLException,
+			IOException, JSONException {
 		String req = PROTOCOL + host + API_PATH + PLAYER + "?" + NAME_QUERY
 				+ playerName + "&" + JSON_TAIL;
-		Scanner scanner = null;
-		try {
-			scanner = new Scanner(new URL(req).openConnection()
-					.getInputStream());
-		} catch (UnknownHostException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Adressen du har lagret til serveren, " + host
-							+ ", er ikke et gyldig vertsnavn. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		} catch (IOException e) {
-			Toast t = Toast.makeText(
-					a.getApplicationContext(),
-					"Kunne ikke hente data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-		}
-		if (scanner == null)
-			return null;
+
+		Scanner scanner = new Scanner(new URL(req).openConnection()
+				.getInputStream());
 
 		StringBuilder sb = new StringBuilder();
 		while (scanner.hasNext()) {
@@ -275,19 +176,9 @@ public class ServerCommunication {
 		String res = sb.toString();
 
 		String retURI = null;
-		JSONArray objs = null;
-		try {
-			objs = new JSONObject(res).getJSONArray("objects");
-			if (objs.length() > 0) {
-				retURI = objs.getJSONObject(0).getString("resource_uri");
-			}
-		} catch (JSONException e) {
-			Toast t = Toast.makeText(a.getApplicationContext(),
-					"Det oppsto en feil ved tolkning av data fra serveren. Feilmelding: "
-							+ e.getMessage(), Toast.LENGTH_LONG);
-			t.setGravity(Gravity.CENTER, 0, 0);
-			t.show();
-			return null;
+		JSONArray objs = new JSONObject(res).getJSONArray("objects");
+		if (objs.length() > 0) {
+			retURI = objs.getJSONObject(0).getString("resource_uri");
 		}
 
 		if (retURI != null)
@@ -296,49 +187,34 @@ public class ServerCommunication {
 		JSONObject newPlayer = new JSONObject();
 		scanner = null;
 
-		try {
-			newPlayer.put("name", playerName);
-			HttpURLConnection huc = (HttpURLConnection) new URL(PROTOCOL + host
-					+ API_PATH + PLAYER).openConnection();
+		newPlayer.put("name", playerName);
+		HttpURLConnection huc = (HttpURLConnection) new URL(PROTOCOL + host
+				+ API_PATH + PLAYER).openConnection();
 
-			huc.setRequestMethod("POST");
-			huc.setRequestProperty("Content-Type", "application/json");
-			huc.setRequestProperty("Content-Length",
-					Integer.toString(newPlayer.toString().getBytes().length));
+		huc.setRequestMethod("POST");
+		huc.setRequestProperty("Content-Type", "application/json");
+		huc.setRequestProperty("Content-Length",
+				Integer.toString(newPlayer.toString().getBytes().length));
 
-			huc.setUseCaches(false);
-			huc.setDoInput(true);
-			huc.setDoOutput(true);
+		huc.setUseCaches(false);
+		huc.setDoInput(true);
+		huc.setDoOutput(true);
 
-			DataOutputStream dos = new DataOutputStream(huc.getOutputStream());
-			dos.writeBytes(newPlayer.toString());
-			dos.flush();
-			dos.close();
+		DataOutputStream dos = new DataOutputStream(huc.getOutputStream());
+		dos.writeBytes(newPlayer.toString());
+		dos.flush();
+		dos.close();
 
-			scanner = new Scanner(huc.getInputStream());
-		} catch (JSONException e) {
-			// Ignore, should never fail
-		} catch (MalformedURLException e) {
-			// Ignore, caught earlier
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		}
-
-		if (scanner == null)
-			return null;
+		scanner = new Scanner(huc.getInputStream());
 
 		sb = new StringBuilder();
 		while (scanner.hasNext()) {
 			sb.append(scanner.nextLine());
 		}
 
-		try {
-			JSONObject jso = new JSONObject(sb.toString());
-			retURI = jso.getString("resource_uri");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
+		JSONObject jso = new JSONObject(sb.toString());
+		retURI = jso.getString("resource_uri");
+		
 		return retURI;
 	}
 
@@ -348,5 +224,32 @@ public class ServerCommunication {
 
 	public String getGoldenWord() {
 		return goldenWord;
+	}
+
+	public void updateBingo(BingoType bt) throws JSONException,
+			MalformedURLException, IOException {
+		String req = PROTOCOL + host + gameURI;
+
+		JSONObject updateScore = new JSONObject();
+		updateScore.put("bingo_leader", playerURI);
+		updateScore.put("bingo_value", bt.getValue());
+		HttpURLConnection huc = (HttpURLConnection) new URL(req)
+				.openConnection();
+
+		huc.setRequestMethod("PUT");
+		huc.setRequestProperty("Content-Type", "application/json");
+		huc.setRequestProperty("Content-Length",
+				Integer.toString(updateScore.toString().getBytes().length));
+
+		huc.setUseCaches(false);
+		huc.setDoInput(false);
+		huc.setDoOutput(true);
+
+		DataOutputStream dos = new DataOutputStream(huc.getOutputStream());
+		dos.writeBytes(updateScore.toString());
+		dos.flush();
+		dos.close();
+		
+		huc.getResponseCode();
 	}
 }

@@ -1,14 +1,12 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -25,21 +23,61 @@ public class BingoView extends ImageView {
 	private static String goldenWord = null;
 	private static String currentBingoLeader = null;
 	private static BingoType currentMaxBingo = BingoType.NONE;
+	private static GameActivity ga = null;
 	private String[] words;
 	private OnCellTouchListener octl = null;
 
+	/**
+	 * An interface that needs to be implemented for anyone that wants to listen
+	 * to BingoCell touch events.
+	 */
 	public interface OnCellTouchListener {
+		/**
+		 * Method that's called whenever a BingoCell generates a touch event
+		 *
+		 * @param c
+		 *            The BingoCell that generated the event
+		 */
 		public void onTouch(BingoCell c);
 	}
 
+	/**
+	 * Creates a BingoView using the given context. The class itself uses
+	 * neither of these, but they are required by the superclass constructor.
+	 *
+	 * @param c
+	 *            The context that created the view
+	 */
 	public BingoView(Context c) {
 		this(c, null);
 	}
 
+	/**
+	 * Creates a BingoView using the given context, attribute set. The class
+	 * itself uses neither of these, but they are required by the superclass
+	 * constructor.
+	 *
+	 * @param c
+	 *            The context that created the view
+	 * @param as
+	 *            The attribute set for the view
+	 */
 	public BingoView(Context c, AttributeSet as) {
 		this(c, as, 0);
 	}
 
+	/**
+	 * Creates a BingoView using the given context, attribute set and definition
+	 * style. The class itself uses neither of these, but they are required by
+	 * the superclass constructor.
+	 *
+	 * @param c
+	 *            The context that created the view
+	 * @param as
+	 *            The attribute set for the view
+	 * @param defStyle
+	 *            The definition style for the view.
+	 */
 	public BingoView(Context c, AttributeSet as, int defStyle) {
 		super(c, as, defStyle);
 		Resources r = getResources();
@@ -52,14 +90,26 @@ public class BingoView extends ImageView {
 		board = new BingoCell[1][1];
 	}
 
+	/**
+	 * Sets the list of words to be drawn as bingo cells
+	 *
+	 * @param words
+	 */
 	public void setWords(String[] words) {
 		this.words = words;
 	}
 
+	/**
+	 * Sets up the margins for the bingo board, so that it is centered no matter
+	 * its size. Uses the devices screen size to accomplish this.
+	 *
+	 * @param d
+	 *            The display the application is running on. Used to get the
+	 *            actual screen size.
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
-	public void buildBoard(Activity a) {
-		Display d = a.getWindowManager().getDefaultDisplay();
+	public void setupMargins(Display d) {
 		Point size = new Point();
 
 		if (android.os.Build.VERSION.SDK_INT >= 13)
@@ -77,7 +127,12 @@ public class BingoView extends ImageView {
 		this.buildBoard();
 	}
 
-	public void buildBoard() {
+	/**
+	 * Creates new BingoCells based on the words in the words field, and inserts
+	 * them into the board array. Depends on setWords and setDim being called
+	 * beforehand.
+	 */
+	private void buildBoard() {
 		Rect bounds = new Rect(CELL_MARGIN_LEFT, CELL_MARGIN_TOP, CELL_WIDTH
 				+ CELL_MARGIN_LEFT, CELL_HEIGHT + CELL_MARGIN_TOP);
 		int k = 0;
@@ -94,14 +149,16 @@ public class BingoView extends ImageView {
 		}
 	}
 
-	@Override
 	public void onLayout(boolean changed, int left, int top, int right,
 			int bottom) {
 		buildBoard();
 		super.onLayout(changed, left, top, right, bottom);
 	}
 
-	@Override
+	/**
+	 * Draws the bingo board by calling the draw method on each of the
+	 * BingoCells
+	 */
 	protected void onDraw(Canvas c) {
 		super.onDraw(c);
 		for (int i = 0; i < board.length; i++) {
@@ -111,10 +168,24 @@ public class BingoView extends ImageView {
 		}
 	}
 
+	/**
+	 * Creates the BingoCell array using the dimension given. The bingo board is
+	 * always square.
+	 *
+	 * @param dim
+	 *            The length and height of the bingo board.
+	 */
 	public void setDim(int dim) {
 		board = new BingoCell[dim][dim];
 	}
 
+	/**
+	 * Checks if the player has a bingo. If he has, it also finds out what type
+	 * of bingo the player has. If the bingo is better than the current best
+	 * bingo on the server, the server is updated with this new best bingo.
+	 *
+	 * @return The type of bingo the player has.
+	 */
 	public BingoType hasBingo() {
 		int size = board.length;
 		int numOfBingos = 0;
@@ -204,13 +275,30 @@ public class BingoView extends ImageView {
 				type = BingoType.GOLDEN_TRIPLE;
 			}
 		}
+		if (type.getValue() > currentMaxBingo.getValue())
+			ga.updateBingo(type);
 		return type;
 	}
 
+	/**
+	 * Sets the {@link OnCellTouchListener}, which is called whenever a bingo
+	 * cell is touched.
+	 *
+	 * @param octl
+	 *            The {@link OnCellTouchListener} to use.
+	 */
 	public void setOnCellTouchListener(OnCellTouchListener octl) {
 		this.octl = octl;
 	}
 
+	/**
+	 * Checks if the point touch intersects with a BingoCell. If it does, the
+	 * {@link OnCellTouchListener}'s onTouch method is called on the relevant
+	 * BingoCells
+	 *
+	 * @param e
+	 *            The {@link MotionEvent} received by the touch listener.
+	 */
 	public boolean onTouchEvent(MotionEvent e) {
 		if (octl != null) {
 			for (BingoCell[] bc : board) {
@@ -224,24 +312,66 @@ public class BingoView extends ImageView {
 		return super.onTouchEvent(e);
 	}
 
+	/**
+	 * Sets the golden word to use for this bingo board.
+	 *
+	 * @param word
+	 *            The golden word for this bingo board.
+	 */
 	public void setGoldenWord(String word) {
 		goldenWord = word;
 	}
 
+	/**
+	 * Sets the GameActivity that is the parent of this BingoView. Used for some
+	 * callback.
+	 *
+	 * @param a
+	 *            The {@link GameActivity} that's the parent of the BingoView
+	 */
+	public void setParentActivity(GameActivity a) {
+		ga = a;
+	}
+
+	/**
+	 * @return The GoldenWord for this bingo board
+	 */
 	public static String getGoldenWord() {
 		return goldenWord;
 	}
 
+	/**
+	 * Checks if the current bingo leader has changed since the last check. If
+	 * it has, and the new bingo leader is someone else apart from the player, a
+	 * message showing the name of the opponent and what type of bingo he got is
+	 * displayed.
+	 *
+	 * @param leader
+	 *            The name of the current leader from the server
+	 * @param point
+	 *            The point value of the bingo of the current leader from the
+	 *            server
+	 */
 	public static void updateLeader(String leader, int point) {
 		BingoType bt = BingoType.forInt(point);
 		if (bt.getValue() > currentMaxBingo.getValue()) {
 			currentMaxBingo = bt;
 			if (!leader.equals(GameActivity.pName)
 					&& !GameActivity.pName.equals(currentBingoLeader)) {
-				// TODO Toast
-				Log.d("DERP", leader + " got a " + bt.name() + "!");
+				final String msg = leader + " fikk en " + bt.name() + " bingo!";
+				ga.displayToast(msg);
 			}
 			currentBingoLeader = leader;
 		}
+	}
+
+	/**
+	 * Resets the bingo leader locally. Typically done when resuming the
+	 * application from lock screen, so that they will immediately be notified
+	 * of who is leading
+	 */
+	public void resetBingoLeader() {
+		currentBingoLeader = "";
+		currentMaxBingo = BingoType.NONE;
 	}
 }

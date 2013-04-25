@@ -5,13 +5,13 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/adminButton"
+        android:id="@+id/newGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="@string/admin_text" />
+        android:text="@string/new_game" />
 
     <Button
         android:id="@+id/settingsButton"
@@ -19,16 +19,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/adminButton"
+        android:layout_below="@+id/newGameButton"
         android:text="@string/settings" />
 
-    <Button
-        android:id="@+id/newGameButton"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/adminButton"
+        android:layout_above="@+id/newGameButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="@string/new_game" />
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bedbing" android:contentDescription="Program logo!"/>
 
 </RelativeLayout>

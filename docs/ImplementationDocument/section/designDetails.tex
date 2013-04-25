@@ -14,6 +14,7 @@ Each item will be described in detail in the follow subsections.
 	\item \textbf{bedpresBingo.GameActivity}
 	\item \textbf{bedpresBingo.ServerCommunication} \\
 	\item \textbf{bedpresBingo.MainActivity} \\
+	\item \textbf{Server} \\
 \end{itemize}
 
 
@@ -49,5 +50,24 @@ The main reason for parting this functionality into a separate class is modifiab
 
 The getBoardFromServer() method will ask the server for a board, and hopefully a string of words is returned, which BingoView later will use to build the board. The method also spawns a pollerThread in order to poll the server for updates regarding other players results.
 
-In order to achieve the goals of availability we have implemented methods for keeping score of a players game. When a player disconnects and then connects again, the getGameURIFromServer will return the game to the player, so the player may continue where he/she was before he/she was disconnected. 
+In order to achieve the goals of availability we have implemented methods for keeping score of a players game. When a player disconnects and then connects again, the getGameURIFromServer will return the game to the player, so the player may continue where he/she was before he/she was disconnected.
 
+
+\subsection{Server}
+The server keeps track on the players, the active game, a company owning the game, and all the active boards. When a client starts a new game, it basically asks the server for a board on the current running game. The server then checks if this player previsouly had an active board running on this game. If a board is found, the player will receive its old board. if not it will return a new randomized board.
+
+\begin{itemize}
+	\item A game is always assigned to a company
+	\item there will only be one game running at any time. 
+	\item Every games has a set of terms assigned to it
+	\item Every board will receive a random subset of terms from the active game
+\end{itemize}
+
+When a player gets a BINGO! It'll notice the server about which kind of bingo it accomplished. The server will then return this information to all other clients when they request the information. Which happens every 3 seconds.
+
+\subsubsection{The system}
+The server is written in Python using the Django web framework. Django appears to be a MVC-framework where we mainly will manage the models and the views for data handling and representation. The application will also contain a twist of observer-observable pattern for the client to observe changes on the server.
+
+Inside of django we'll be using a webservice API framework called tastypie. This let us create a REST-style interfaces for our service. With our REST-service the clients only needs to request and send data back and forth with some simple JSON over http.
+
+Each modules of the system is devied into separated apps to easen a later maintenance process, and to easen the development process without cluttering the workspace.
