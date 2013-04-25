@@ -1,8 +1,14 @@
 package no.ntnu.noahsprogark.bedpresbingo;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -12,6 +18,7 @@ public class GameActivity extends Activity implements
 	public static String pName = "";
 
 	private BingoType lastBingo = BingoType.NONE;
+	private ServerCommunication s;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,8 +27,37 @@ public class GameActivity extends Activity implements
 				MODE_PRIVATE);
 		String host = settings.getString("hostName", "127.0.0.1:8000");
 		pName = settings.getString("playerName", "");
-		ServerCommunication s = new ServerCommunication(pName, host);
-		s.getBoardFromServer(this);
+		s = new ServerCommunication(pName, host);
+		try {
+			s.getBoardFromServer();
+		} catch (IllegalArgumentException e) {
+			Toast t = Toast.makeText(getApplicationContext(),
+					"Du må skrive inn et navn i innstillingsskjermen!",
+					Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+		} catch (MalformedURLException e) {
+			Toast t = Toast.makeText(
+					getApplicationContext(),
+					"Vertsnavnet i innstillingsskjermen er ugyldig: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+			Log.d("DERP", "getBoardErr: " + e.getMessage());
+		} catch (IOException e) {
+			Toast t = Toast.makeText(
+					getApplicationContext(),
+					"Det oppsto en feil ved kommunisering med tjener: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+		} catch (JSONException e) {
+			Toast t = Toast.makeText(getApplicationContext(),
+					"Det oppsto en feil ved tolkning av data fra tjeneren: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+		}
 		String[] words = s.getWords();
 		String goldenWord = s.getGoldenWord();
 		if (words != null) {
@@ -42,7 +78,35 @@ public class GameActivity extends Activity implements
 				view.setGoldenWord(goldenWord);
 				view.setDim(dim);
 				view.buildBoard(this);
+				view.setParentActivity(this);
 			}
+		}
+	}
+
+	public void updateBingo(BingoType bt) {
+		try {
+			s.updateBingo(bt);
+		} catch (MalformedURLException e) {
+			Toast t = Toast.makeText(
+					getApplicationContext(),
+					"Vertsnavnet i innstillingsskjermen er ugyldig: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+			Log.d("DERP", Log.getStackTraceString(e));
+		} catch (IOException e) {
+			Toast t = Toast.makeText(
+					getApplicationContext(),
+					"Det oppsto en feil ved kommunisering med tjener: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+		} catch (JSONException e) {
+			Toast t = Toast.makeText(getApplicationContext(),
+					"Det oppsto en feil ved tolkning av data fra tjeneren: "
+							+ e.getMessage(), Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
 		}
 	}
 
@@ -59,5 +123,13 @@ public class GameActivity extends Activity implements
 		}
 		lastBingo = currentBingo;
 		view.invalidate();
+	}
+
+	public void displayToast(String msg) {
+		Toast t = Toast.makeText(getApplicationContext(), msg,
+				Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+
 	}
 }

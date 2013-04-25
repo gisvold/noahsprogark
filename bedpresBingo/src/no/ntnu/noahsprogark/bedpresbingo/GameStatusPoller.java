@@ -17,8 +17,7 @@ public class GameStatusPoller implements Runnable {
 	private boolean run;
 	private int sleepTime;
 
-	public GameStatusPoller(String gameURI,
-			int sleepTime, String host) {
+	public GameStatusPoller(String gameURI, int sleepTime, String host) {
 		this.gURI = gameURI;
 		this.run = true;
 		this.sleepTime = sleepTime;
@@ -52,8 +51,8 @@ public class GameStatusPoller implements Runnable {
 
 			try {
 				JSONObject obj = new JSONObject(res);
-				JSONObject leader = obj.getJSONObject("bingo_leader");
-				if (leader.equals(JSONObject.NULL)) {
+				JSONObject leader = obj.optJSONObject("bingo_leader");
+				if (leader == null) {
 					BingoView.updateLeader("", 0);
 				} else {
 					BingoView.updateLeader(leader.getString("name"),

@@ -10,8 +10,10 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class BingoView extends ImageView {
 	private static int CELL_WIDTH;
@@ -25,6 +27,7 @@ public class BingoView extends ImageView {
 	private static String goldenWord = null;
 	private static String currentBingoLeader = null;
 	private static BingoType currentMaxBingo = BingoType.NONE;
+	private static GameActivity ga = null;
 	private String[] words;
 	private OnCellTouchListener octl = null;
 
@@ -204,6 +207,8 @@ public class BingoView extends ImageView {
 				type = BingoType.GOLDEN_TRIPLE;
 			}
 		}
+		if (type.getValue() > currentMaxBingo.getValue())
+			ga.updateBingo(type);
 		return type;
 	}
 
@@ -228,6 +233,10 @@ public class BingoView extends ImageView {
 		goldenWord = word;
 	}
 
+	public void setParentActivity(GameActivity a) {
+		ga = a;
+	}
+
 	public static String getGoldenWord() {
 		return goldenWord;
 	}
@@ -238,8 +247,16 @@ public class BingoView extends ImageView {
 			currentMaxBingo = bt;
 			if (!leader.equals(GameActivity.pName)
 					&& !GameActivity.pName.equals(currentBingoLeader)) {
-				// TODO Toast
-				Log.d("DERP", leader + " got a " + bt.name() + "!");
+				final String msg = leader + " fikk en " + bt.name() + " bingo!";
+				Log.d("DERP", msg);
+				ga.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast t = Toast.makeText(ga, msg, Toast.LENGTH_LONG);
+						t.setGravity(Gravity.CENTER, 0, 0);
+						t.show();
+					}
+				});
 			}
 			currentBingoLeader = leader;
 		}
