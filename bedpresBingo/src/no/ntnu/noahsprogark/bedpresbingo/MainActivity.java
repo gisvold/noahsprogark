@@ -20,13 +20,6 @@ public class MainActivity extends Activity {
 				startActivityForResult(i, 0);
 			}
 		});
-        findViewById(R.id.adminButton).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(), AdminActivity.class);
-				startActivityForResult(i, 0);
-			}
-		});
         findViewById(R.id.settingsButton).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
